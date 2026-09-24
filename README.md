@@ -2,7 +2,7 @@
 
 A client-rendered Remy application built entirely from the published shared package
 [`@joeblew999/remy-ui`](https://github.com/joeblew999/remy-auth/tree/main/packages/ui):
-the same controls, theme, catalogs in English, Spanish and Arabic, language chooser,
+the same controls, theme, catalogs in English, Spanish and Arabic, language switcher,
 hint and switcher as [remy-auth](https://github.com/joeblew999/remy-auth), rendered in
 the browser instead of on the server, with every public page prerendered at build time
 so the initial HTML still carries what Google's checks look for.
