@@ -10,3 +10,6 @@ them over your own defaults.
 
 Run project commands through `mise run <namespace:action>` once the bootstrap exists.
 Before reporting work as done, run the verification task and report its real result.
+Task descriptions (`mise tasks ls`) say how long each task takes and what may run at the same
+time: run post-deploy checks in the background and keep working; state the expected duration
+before starting anything that takes more than a few seconds.
