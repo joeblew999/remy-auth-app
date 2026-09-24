@@ -1,1 +1,0 @@
-import{a as e}from"./components-TmgkSkkA.js";import{t}from"./jsx-runtime-CNjUVJGA.js";import{n,t as r}from"./entry-C9KW5_s7.js";var i=t();function a(){return n(``)}var o=e(function(){return(0,i.jsx)(r,{path:``})});export{o as default,a as meta};

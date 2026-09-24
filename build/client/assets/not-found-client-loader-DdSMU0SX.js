@@ -1,1 +1,0 @@
-function e(){throw new Response(`Not found`,{status:404})}export{e as clientLoader};
