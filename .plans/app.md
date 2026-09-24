@@ -34,7 +34,8 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
   `browser:*`, `web:guidance`, `project:doctor`) as project tasks, not yet as an
   includable task file.
 - mise's `[task_config] includes` accepts `git::<protocol>://<url>//<path>?ref=<ref>`;
-  the repository is private, so the include needs an SSH URL or credentials.
+  both repositories have been public since 2026-09-24, so an HTTPS include needs no
+  credentials.
 
 ## Outcome
 
@@ -56,7 +57,7 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
    Keep the `*_skills_source` pins as variables the include reads. Verify with
    `mise run project:verify` there.
 2. **Bootstrap here.** `mise.toml` with the Node pin and
-   `[task_config] includes = ["git::ssh://git@github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]`;
+   `[task_config] includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]`;
    run `mise run project:setup`, then `mise run skills:list` and `mise run mcp:verify`
    to prove the skills and MCP registration exist in this checkout.
 3. **Consume the package.** Install `@joeblew999/remy-ui` from GitHub Packages at a
@@ -141,5 +142,6 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
    repository decouples releases. remy-auth's principle against the retired shared
    task library still applies: the include must be pinned to a commit and reviewed on
    update, not tracked at `main`.
-4. **Visibility.** This repository was created private to match remy-auth. Making it
-   public changes what the README may say about the private package.
+4. **Visibility.** Decided 2026-09-24: both repositories are public. The package's
+   visibility on GitHub Packages follows the linked repository; installs are still
+   expected to need a token, to be confirmed at the first publish.
