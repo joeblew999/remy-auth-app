@@ -10,7 +10,7 @@ node = "26.10.0"
 task.timings = true
 
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=f89d073d0e5695f451801d431a31be98cae6cb08"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=dca8443de6cccd0b29b732ae494be216f26f24ae"]
 
 [env]
 # Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is

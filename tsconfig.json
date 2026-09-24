@@ -1,13 +1,29 @@
 {
-  "include": ["app/**/*", "*.ts", ".react-router/types/**/*"],
+  "include": [
+    "*.ts",
+    ".react-router/types/**/*",
+    "app/**/*",
+    "worker-configuration.d.ts",
+    "workers/**/*"
+  ],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["vite/client", "node"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
+    "types": [
+      "vite/client",
+      "node"
+    ],
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
-    "rootDirs": [".", "./.react-router/types"],
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "strict": true,
