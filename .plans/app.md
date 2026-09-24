@@ -62,15 +62,58 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 3. **Distribute the package.** Consume `@remy/ui` as a versioned artifact, per the
    remy-auth rule that cross-repository consumers do not use sibling paths. Blocked on
    owner decision 1 below.
-4. **Build the app.** React Router framework mode with `ssr: false`, the Cloudflare
-   Vite plugin for a static-assets Worker, the three pages, the language chooser, hint
-   and switcher from the package, and Playwright plus Lighthouse checks adapted to
-   client rendering (the document shell is static, so metadata comes from the route
-   modules at build time or a prerender step; decision 2).
+4. **Build the app.** React Router framework mode with `ssr: false` and a `prerender`
+   list, the Cloudflare Vite plugin for a static-assets Worker, the three pages, the
+   language chooser, hint and switcher from the package, and Playwright plus Lighthouse
+   checks adapted to client rendering, following the prerendering decision below.
 5. **Verify reuse both ways.** remy-auth's shared UI plan item 5: one check compares
    the accessibility tree and computed styles of the shared controls in both apps.
 6. **Deploy** to its own Worker only on the owner's explicit request, then run the same
    suite against the deployed URL.
+
+## Prerendering decision
+
+Decided 2026-09-24 by the owner's instruction to address it; reasoning and sources here.
+
+**Decision.** Every public page is prerendered at build time: `/{locale}`,
+`/{locale}/demo` and `/{locale}/formats` for every locale, plus the chooser paths `/`,
+`/demo` and `/formats`. Unknown paths return a real 404 from a static `404.html`
+(Workers assets `not_found_handling: "404-page"`); the SPA fallback file React Router
+also emits is not served, because no valid URL is left un-prerendered.
+
+**Why.** remy-auth's GUI plan accepts a public page only when its meaningful content,
+localized title and description, canonical URL and hreflang links are in the initial
+HTML response. Lighthouse executes JavaScript, so it passes a client-only page and
+proves nothing about that response; the no-JavaScript fetch checks in the suite are
+what make Google's guidance verifiable, and they need static HTML. Prerendering keeps
+those checks meaningful in a client-rendered app, and removes the dependency on
+Google's deferred JavaScript rendering.
+
+**Rules from the pinned React Router docs** (`node_modules/react-router/docs/how-to/pre-rendering.md`):
+loaders on prerendered routes run at build time against a synthetic `Request`, so they
+see no `Accept-Language`, cookies or Cloudflare geolocation; `headers` and `action`
+exports are prohibited with `ssr: false`; routes not prerendered may only use
+`clientLoader`.
+
+**Consequences for the shared behaviour.**
+
+- The chooser pages prerender as neutral lists of every language, which is exactly
+  what Google wants from an `x-default` page. In the browser they enhance with
+  `navigator.languages` to mark the suggested language, and a remembered choice
+  (`document.cookie`) triggers a client-side `location.replace`. That is the visitor's
+  own earlier choice, not a guess, so it stays within Google's guidance.
+- The language hint on localized pages is client-side only and reserves no space; it
+  appears after hydration.
+- The canonical origin is a build-time value (`PUBLIC_ORIGIN`), since no request
+  exists at build time. The owner sets it per deployment.
+- The formats page omits the Cloudflare location section: per-request geolocation is
+  a server-rendering feature and the omission is the honest difference between the
+  two modes. The device time zone row stays client-side, as in remy-auth.
+- The reservation form is already client-only, so nothing changes there.
+
+**Verification.** The same no-JavaScript checks as remy-auth run against the static
+files the Worker serves; Lighthouse runs as before; a check confirms every URL in the
+sitemap is a prerendered file and that an unknown path returns 404, not the fallback.
 
 ## Acceptance
 
@@ -87,9 +130,8 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 1. **Package distribution.** Publish `@remy/ui` to GitHub Packages or an npm scope, or
    attach the packed tarball to a remy-auth release. npm cannot install one workspace
    package from a git URL, so "install from the repo" is not an option.
-2. **Metadata in a client-rendered app.** Prerender the public pages at build time
-   (Google sees complete HTML) or accept client-only metadata for this demo and mark
-   it `noindex`. Prerendering is recommended; it keeps the Google checks meaningful.
+2. **Metadata in a client-rendered app.** Decided 2026-09-24: prerender every public
+   page. See "Prerendering decision" below.
 3. **Where the includable tasks live.** Inside remy-auth (`tasks/`) or a separate
    tooling repository. Inside remy-auth is simplest and keeps one owner; a separate
    repository decouples releases. remy-auth's principle against the retired shared
