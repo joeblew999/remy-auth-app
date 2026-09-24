@@ -69,8 +69,9 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
    switcher and hint from the package, Paraglide's middleware at prerender time so each
    page carries its locale, and Playwright plus Lighthouse checks that run on Cloudflare's
    local asset host (`wrangler dev`) so `html_handling` and 404 semantics match production.
-5. **Verify reuse both ways.** remy-auth's shared UI plan item 5: one check compares
-   the accessibility tree and computed styles of the shared controls in both apps.
+5. **Verify reuse both ways.** Done 2026-09-24 the stronger way: both repositories run the
+   same checks from `@joeblew999/remy-ui/checks` (0.3.0), so the shared controls and language
+   behaviour are verified identically in server and client rendering.
 6. **Deploy** to its own Worker only on the owner's explicit request, then run the same
    suite against the deployed URL.
 

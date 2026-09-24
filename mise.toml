@@ -5,7 +5,7 @@ node = "26.10.0"
 # is remy-auth's tasks directory, included by git reference pinned to a commit. Update the ref
 # deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=038972a078438041fe8f2864411759b47ee02374"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=9e6bb7dabe5c536bfc15d68909606ec132b17cf4"]
 
 [env]
 # Public origin baked into canonical and alternate links at build time; cf:deploy overrides it.
@@ -44,12 +44,6 @@ description = "Build, then run the browser, HTTP and Lighthouse checks against t
 dir = "{{config_root}}"
 depends = ["project:build"]
 env = { TEST_TARGET = "local" }
-run = "./node_modules/.bin/playwright test"
-
-[tasks."project:test:remote"]
-description = "Run the same checks against TEST_BASE_URL without a local server"
-dir = "{{config_root}}"
-env = { TEST_TARGET = "remote" }
 run = "./node_modules/.bin/playwright test"
 
 [tasks."project:verify"]

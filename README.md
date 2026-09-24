@@ -40,5 +40,8 @@ Packages needs a token even for public packages, hence `GITHUB_TOKEN`.
 
 Language behaviour is the package's, on Paraglide's `url`, `cookie` and `preferredLanguage`
 strategies: remy-auth applies them in a server middleware, this app in the browser after
-hydration. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
+hydration. The checks are the package's too: `tests/gui.spec.ts` and `tests/lighthouse.spec.ts`
+only call `@joeblew999/remy-ui/checks` with this app's paths, so Google's checks arrive with
+the code. The `project:test:remote`, `project:report`, `cf:*` and agent launcher tasks come
+from the same remy-auth include as the bootstrap. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
 geolocation section, because a prerendered page has no request. See [the plan](.plans/app.md).

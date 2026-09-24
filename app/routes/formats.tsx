@@ -5,7 +5,7 @@ import { m } from '@joeblew999/remy-ui/messages';
 import { Shell } from '../shell';
 import { requireLocale } from '../locale';
 import { pageMeta } from '../seo';
-import { samples } from '../samples';
+import { samples } from '@joeblew999/remy-ui/samples';
 import type { Route } from './+types/formats';
 
 // The loader runs at build time in Node, where the Intl Locale Info methods exist.
