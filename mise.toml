@@ -1,14 +1,20 @@
 [tools]
 node = "26.10.0"
 
+# The agent bootstrap (pinned skills, MCP registration, Chrome DevTools, Google's web guidance)
+# is remy-auth's tasks directory, included by git reference pinned to a commit. Update the ref
+# deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
+[task_config]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=038972a078438041fe8f2864411759b47ee02374"]
+
 [env]
 # Public origin baked into canonical and alternate links at build time; cf:deploy overrides it.
 PUBLIC_ORIGIN = "http://127.0.0.1:4174"
 
 [tasks."project:setup"]
-description = "Install dependencies (GITHUB_TOKEN with read:packages for the shared UI), then verify"
+description = "Install dependencies (GITHUB_TOKEN with read:packages for the shared UI), the shared skills and MCP registration, then verify"
 dir = "{{config_root}}"
-run = ["npm ci", { task = "project:verify" }]
+run = ["npm ci", { task = "skills:install" }, { task = "mcp:register" }, { task = "project:verify" }]
 
 [tasks."project:typecheck"]
 description = "Generate route types and check the app"
@@ -49,7 +55,7 @@ run = "./node_modules/.bin/playwright test"
 [tasks."project:verify"]
 description = "Verify tasks, dependencies, types, the prerendered build and every check"
 dir = "{{config_root}}"
-run = ["mise tasks validate", "npm ls --depth=0", { task = "project:typecheck" }, { task = "project:test" }]
+run = ["mise tasks validate", "npm ls --depth=0", { task = "mcp:verify" }, { task = "project:typecheck" }, { task = "project:test" }]
 
 [tasks."cf:deploy"]
 description = "Prerender with the deployed origin and upload the static assets to Cloudflare"

@@ -51,15 +51,15 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 
 ## Work items, in order
 
-1. **Make the bootstrap includable (in remy-auth).** Move the skill, MCP, browser and
-   guidance tasks and their scripts into a `tasks/` directory that a remote include can
-   load; keep remy-auth's own `mise.toml` including it locally so one copy exists.
-   Keep the `*_skills_source` pins as variables the include reads. Verify with
-   `mise run project:verify` there.
-2. **Bootstrap here.** `mise.toml` with the Node pin and
-   `[task_config] includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]`;
-   run `mise run project:setup`, then `mise run skills:list` and `mise run mcp:verify`
-   to prove the skills and MCP registration exist in this checkout.
+1. **Make the bootstrap includable (in remy-auth).** Done 2026-09-24: `tasks/bootstrap.toml`
+   (skills, MCP, browser, web guidance; the `*_skills_source` pins are the `skills:install`
+   task's vars, since included task files cannot carry `[vars]`) and the `tasks/mcp/register`
+   file task; remy-auth's `mise.toml` includes the directory locally, so one copy exists.
+2. **Bootstrap here.** Done 2026-09-24: `mise.toml` includes remy-auth's `tasks` by git
+   reference pinned to commit `038972a`; `skills:install` put 33 skills in `.agents/skills`
+   with `.claude/skills` links and `skills-lock.json`, and `mcp:register` wrote this
+   checkout's own `.mcp.json` and `.codex/config.toml`; `project:setup` and `project:verify`
+   run them.
 3. **Consume the package.** Done 2026-09-24 for the proof: `@joeblew999/remy-ui@0.1.0`
    from GitHub Packages, with `mise run package:verify` building a client bundle and a
    server render from it. The app's own build (item 4) reuses this setup.
@@ -121,8 +121,8 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
 ## Acceptance
 
 - `mise run project:setup` in a fresh clone installs the pinned skills and registers
-  MCP using only the included tasks (pending item 1); `mise run project:verify` is green
-  (true since 2026-09-24: 18 checks).
+  MCP using only the included tasks (true since 2026-09-24); `mise run project:verify` is
+  green (18 checks plus the MCP check).
 - Every Lighthouse audit passes on the deployed and local builds; the language
   chooser, hint and remembered choice behave as in remy-auth.
 - No file in this repository is copied from remy-auth's `app/` or `packages/ui/src`;
@@ -141,11 +141,10 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
    `mise run package:verify` builds a client bundle and a server render from it.
 2. **Metadata in a client-rendered app.** Decided 2026-09-24: prerender every public
    page. See "Prerendering decision" below.
-3. **Where the includable tasks live.** Inside remy-auth (`tasks/`) or a separate
-   tooling repository. Inside remy-auth is simplest and keeps one owner; a separate
-   repository decouples releases. remy-auth's principle against the retired shared
-   task library still applies: the include must be pinned to a commit and reviewed on
-   update, not tracked at `main`.
+3. **Where the includable tasks live.** Decided 2026-09-24: inside remy-auth (`tasks/`),
+   one owner and one copy. The include is pinned to a commit and reviewed on update,
+   never tracked at `main`, honouring remy-auth's principle against the retired shared
+   task library.
 4. **Visibility.** Decided 2026-09-24: both repositories are public, and the package
    is public on GitHub Packages. Confirmed the same day: its npm registry still returns
    401 without a token, so installs need `read:packages` regardless.

@@ -20,6 +20,8 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "chrome-devtools-mcp": "1.10.1",
+    "modern-web-guidance": "0.0.190",
+    "smol-toml": "1.9.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",
     "vite": "8.3.0",

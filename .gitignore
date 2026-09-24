@@ -1,2 +1,8 @@
 node_modules/
-dist/
+build/
+.react-router/
+.wrangler/
+# Generated per machine by mise run mcp:register; skills-lock.json, .agents/ and .claude/ stay in version control.
+.mcp.json
+.codex/
+*.bak

@@ -9,13 +9,25 @@ so the initial HTML still carries what Google's checks look for.
 
 ```sh
 mise install
-GITHUB_TOKEN=$(gh auth token) mise run project:setup   # GitHub Packages needs a token even for public packages
+GITHUB_TOKEN=$(gh auth token) mise run project:setup   # npm ci, shared skills, MCP registration, verify
 mise run project:dev                                    # http://127.0.0.1:5174/en
-mise run project:verify                                 # types, prerendered build, browser, HTTP and Lighthouse checks
+mise run project:verify                                 # MCP, types, prerendered build, browser, HTTP and Lighthouse checks
 ```
 
 Google Chrome must be installed for the checks. No path to a remy-auth checkout exists
-here; only the published package version in `package.json`.
+here: the UI comes from the published package version in `package.json`, and the agent
+bootstrap (pinned official skills, Chrome DevTools, Google's web guidance, MCP registration)
+comes from remy-auth's `tasks/` directory, included in `mise.toml` by git reference pinned
+to a commit. That is the whole recipe for any project:
+
+```toml
+[task_config]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]
+```
+
+plus the npm packages those tasks run (`chrome-devtools-mcp`, `modern-web-guidance`,
+`smol-toml`). `mise run skills:list` and `mise run mcp:verify` show the result; GitHub
+Packages needs a token even for public packages, hence `GITHUB_TOKEN`.
 
 | Route | Behavior |
 | --- | --- |
