@@ -1,6 +1,6 @@
 # Remy Auth App: reuse the shared code, bootstrap any project
 
-Status: implemented 2026-09-24; one acceptance line (the recipe in a third project) is the owner's to test. Owner: joeblew999. Reviewer defines acceptance; Executor
+Status: done; accepted by the owner 2026-09-24 (the recipe test in a third project remains the owner's). Owner: joeblew999. Reviewer defines acceptance; Executor
 implements bounded work items and stops at the open decisions. Nothing is built yet.
 
 ## Why this repository exists

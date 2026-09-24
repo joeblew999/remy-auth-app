@@ -47,4 +47,4 @@ pipeline (`project:dev`, `build`, `preview`, `test`, `verify`, `cf:deploy`); thi
 `mise.toml` holds only its Node pin, the include reference and three inputs (`PREVIEW_PORT`,
 `PUBLIC_ORIGIN`, `DEPLOY_ORIGIN`). Its Playwright configuration is the package's
 `playwrightConfig()`. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
-geolocation section, because a prerendered page has no request. See [the plan](.plans/app.md).
+geolocation section, because a prerendered page has no request. See [the plan](.plans/done/app.md), now done,.
