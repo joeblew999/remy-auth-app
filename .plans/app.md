@@ -51,10 +51,10 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 
 ## Work items, in order
 
-1. **Make the bootstrap includable (in remy-auth).** Done 2026-09-24: `tasks/bootstrap.toml`
-   (skills, MCP, browser, web guidance; the `*_skills_source` pins are the `skills:install`
-   task's vars, since included task files cannot carry `[vars]`) and the `tasks/mcp/register`
-   file task; remy-auth's `mise.toml` includes the directory locally, so one copy exists.
+1. **Make the bootstrap includable (in remy-auth).** Done 2026-09-24: remy-auth's `tasks/` directory, one file per
+   task namespace (`skills`, `mcp`, `browser`, `web`, `codex`, `claude`, `project`, `cf`; the
+   `*_skills_source` pins are the `skills:install` task's vars, since included task files
+   cannot carry `[vars]`) and the `tasks/mcp/register` file task; remy-auth's `mise.toml` includes the directory locally, so one copy exists.
 2. **Bootstrap here.** Done 2026-09-24: `mise.toml` includes remy-auth's `tasks` by git
    reference pinned to commit `038972a`; `skills:install` put 33 skills in `.agents/skills`
    with `.claude/skills` links and `skills-lock.json`, and `mcp:register` wrote this

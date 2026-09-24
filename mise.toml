@@ -1,11 +1,12 @@
 [tools]
 node = "26.10.0"
 
-# The agent bootstrap (pinned skills, MCP registration, Chrome DevTools, Google's web guidance)
-# is remy-auth's tasks directory, included by git reference pinned to a commit. Update the ref
+# Every task (pipeline, pinned skills, MCP registration, Chrome DevTools, Google's web guidance,
+# agent launchers, Cloudflare) is remy-auth's tasks directory, one file per namespace, included
+# by git reference pinned to a commit. Update the ref
 # deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=1bb27969fcc5f02352075cd17cdc055185aab1ca"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=698ccbb3e9738abda3f98b06d0eff45af2fb6255"]
 
 [env]
 # Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is
