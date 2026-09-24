@@ -25,8 +25,8 @@ export function Entry({ path }: { path: string }) {
   useEffect(() => {
     shouldRedirect().then(decision => { if (decision.shouldRedirect && decision.redirectUrl) location.replace(decision.redirectUrl.href); });
   }, [path]);
-  return <main id="main" className="entry">
-    <h1>{m.language_label({}, { locale: baseLocale })}</h1>
+  return <main id="main" className="mx-auto max-w-xl px-6 py-20">
+    <h1 className="mb-6 text-3xl font-semibold tracking-tight">{m.language_label({}, { locale: baseLocale })}</h1>
     <LanguageSwitcher locale={baseLocale} path={path} />
   </main>;
 }

@@ -1,4 +1,4 @@
-import { buttonVariants } from '@joeblew999/remy-ui/button';
+import { buttonVariants } from '@joeblew999/remy-ui/components/button';
 import { m } from '@joeblew999/remy-ui/messages';
 import { Shell } from '../shell';
 import { requireLocale } from '../locale';
@@ -12,11 +12,11 @@ export function meta({ params }: Route.MetaArgs) {
 export default function Home({ loaderData: { locale } }: Route.ComponentProps) {
   const o = { locale };
   return <Shell locale={locale}>
-    <section className="hero">
-      <p className="eyebrow">{m.public_label({}, o)}</p>
-      <h1>{m.home_title({}, o)}</h1>
-      <p className="intro">{m.home_intro({}, o)}</p>
-      <div className="actions">
+    <section className="mx-auto flex max-w-2xl flex-col gap-6">
+      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{m.public_label({}, o)}</p>
+      <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl">{m.home_title({}, o)}</h1>
+      <p className="max-w-lg text-lg leading-relaxed text-muted-foreground">{m.home_intro({}, o)}</p>
+      <div className="flex flex-wrap gap-3">
         <a className={buttonVariants({ size: 'lg' })} href={`/${locale}/demo`}>{m.demo_link({}, o)}</a>
         <a className={buttonVariants({ size: 'lg', variant: 'outline' })} href={`/${locale}/formats`}>{m.formats_link({}, o)}</a>
       </div>

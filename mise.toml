@@ -6,7 +6,7 @@ node = "26.10.0"
 # by git reference pinned to a commit. Update the ref
 # deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=698ccbb3e9738abda3f98b06d0eff45af2fb6255"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=068e20b722ce7118c9376fef8d798d942d717cfb"]
 
 [env]
 # Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is
