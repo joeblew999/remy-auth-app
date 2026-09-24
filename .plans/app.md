@@ -1,6 +1,6 @@
 # Remy Auth App: reuse the shared code, bootstrap any project
 
-Status: proposed 2026-09-24. Owner: joeblew999. Reviewer defines acceptance; Executor
+Status: implemented 2026-09-24; one acceptance line (the recipe in a third project) is the owner's to test. Owner: joeblew999. Reviewer defines acceptance; Executor
 implements bounded work items and stops at the open decisions. Nothing is built yet.
 
 ## Why this repository exists
@@ -72,8 +72,8 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 5. **Verify reuse both ways.** Done 2026-09-24 the stronger way: both repositories run the
    same checks from `@joeblew999/remy-ui/checks` (0.3.0), so the shared controls and language
    behaviour are verified identically in server and client rendering.
-6. **Deploy** to its own Worker only on the owner's explicit request, then run the same
-   suite against the deployed URL.
+6. **Deploy.** Done 2026-09-24 on the owner's request: https://remy-auth-app.gedw99.workers.dev,
+   with the same suite passing against it after every deployment.
 
 ## Prerendering decision
 
