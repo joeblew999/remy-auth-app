@@ -1,0 +1,53 @@
+@import "tailwindcss";
+@import "@joeblew999/remy-ui/styles.css";
+@source "../node_modules/@joeblew999/remy-ui/src";
+
+@theme { --font-sans: Inter, ui-sans-serif, system-ui, sans-serif; }
+:root { font-family: var(--font-sans); color: var(--foreground); background: var(--background); }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ring); outline-offset: 4px; border-radius: 4px; }
+.site { max-width: 1080px; margin-inline: auto; padding-inline: 32px; min-height: 100svh; display: flex; flex-direction: column; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 26px; border-bottom: 1px solid var(--border); }
+.brand { display: inline-flex; align-items: center; text-decoration: none; font-size: 26px; font-weight: 750; letter-spacing: -1px; color: var(--foreground); }
+.brand-mark { display: grid; place-items: center; background: var(--primary); color: var(--primary-foreground); width: 30px; height: 30px; border-radius: 9px; margin-inline-end: 10px; font-size: 24px; line-height: 1; }
+.brand-dot { color: var(--primary); }
+.site > main { flex: 1; padding-block: 56px; }
+.hero, .page { width: min(100%, 720px); margin-inline: auto; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--muted-foreground); margin-bottom: 20px; }
+h1 { font-size: clamp(34px, 4.5vw, 54px); line-height: 1.08; letter-spacing: -.04em; font-weight: 650; margin: 0; text-wrap: balance; }
+h2 { font-size: 13px; font-weight: 650; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground); margin-block: 40px 12px; }
+.intro { color: var(--muted-foreground); font-size: 17px; line-height: 1.7; margin-block: 20px 28px; max-width: 520px; }
+.muted { color: var(--muted-foreground); font-size: 14px; margin: 0; }
+.small { margin-top: 20px; line-height: 1.6; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.back-link { display: inline-block; font-size: 13px; color: var(--muted-foreground); margin-bottom: 32px; text-decoration: none; }
+.back-arrow::before { content: "← "; }
+html[dir="rtl"] .back-arrow::before { content: "→ "; }
+.card { border: 1px solid var(--border); background: var(--card); padding: 28px; border-radius: 18px; margin-top: 20px; }
+.card h2 { margin-block: 0 16px; font-size: 17px; letter-spacing: 0; text-transform: none; color: var(--foreground); }
+.count { display: block; font-size: 60px; font-variant-numeric: tabular-nums; line-height: 1.4; }
+.field { display: grid; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: 14px; color: var(--muted-foreground); }
+.field input { font: inherit; padding: 10px 12px; border: 1px solid var(--input); border-radius: 8px; background: var(--background); color: var(--foreground); width: 100%; max-width: 360px; }
+.field input:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.field input[aria-invalid="true"] { border-color: var(--destructive); }
+.field-error { margin: 0; font-size: 14px; color: var(--destructive); }
+.reserved { margin-block: 14px 0; min-height: 1.5em; }
+.formats dl { display: grid; gap: 10px; margin: 0; }
+.formats dl > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 16px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 12px; background: var(--card); }
+.formats dt { color: var(--muted-foreground); font-size: 14px; }
+.formats dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.pills li { border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-block: 24px; border-top: 1px solid var(--border); color: var(--muted-foreground); font-size: 12px; }
+.entry { max-width: 640px; margin: auto; padding: 80px 24px; }
+.entry h1 { margin-bottom: 24px; }
+.error-page { max-width: 800px; padding: 80px 24px; margin: auto; }
+.skip-link { position: fixed; inset-block-start: 8px; inset-inline-start: 8px; transform: translateY(-150%); background: var(--background); padding: 12px; z-index: 10; }
+.skip-link:focus { transform: none; }
+@media (max-width: 760px) {
+  .site { padding-inline: 20px; }
+  .site > main { padding-block: 36px; }
+  .languages a { padding: 8px; }
+}

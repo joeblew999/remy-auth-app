@@ -63,10 +63,12 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 3. **Consume the package.** Done 2026-09-24 for the proof: `@joeblew999/remy-ui@0.1.0`
    from GitHub Packages, with `mise run package:verify` building a client bundle and a
    server render from it. The app's own build (item 4) reuses this setup.
-4. **Build the app.** React Router framework mode with `ssr: false` and a `prerender`
-   list, the Cloudflare Vite plugin for a static-assets Worker, the three pages, the
-   language chooser, hint and switcher from the package, and Playwright plus Lighthouse
-   checks adapted to client rendering, following the prerendering decision below.
+4. **Build the app.** Done 2026-09-24 on `@joeblew999/remy-ui@0.2.0`: React Router
+   framework mode with `ssr: false` and a prerender list from Paraglide's URL patterns,
+   a static-assets Worker (`wrangler.jsonc`, no script), the three pages, the language
+   switcher and hint from the package, Paraglide's middleware at prerender time so each
+   page carries its locale, and Playwright plus Lighthouse checks that run on Cloudflare's
+   local asset host (`wrangler dev`) so `html_handling` and 404 semantics match production.
 5. **Verify reuse both ways.** remy-auth's shared UI plan item 5: one check compares
    the accessibility tree and computed styles of the shared controls in both apps.
 6. **Deploy** to its own Worker only on the owner's explicit request, then run the same
@@ -98,13 +100,13 @@ exports are prohibited with `ssr: false`; routes not prerendered may only use
 
 **Consequences for the shared behaviour.**
 
-- The chooser pages prerender as neutral lists of every language, which is exactly
-  what Google wants from an `x-default` page. In the browser they enhance with
-  `navigator.languages` to mark the suggested language, and a remembered choice
-  (`document.cookie`) triggers a client-side `location.replace`. That is the visitor's
-  own earlier choice, not a guess, so it stays within Google's guidance.
-- The language hint on localized pages is client-side only and reserves no space; it
-  appears after hydration.
+- The entry URLs (`/`, `/demo`, `/formats`) prerender as plain lists of every language
+  version and are the `x-default` targets. In the browser, Paraglide's own
+  `shouldRedirect` (strategies `url`, `cookie`, `preferredLanguage`, `baseLocale`) moves
+  the visitor to their language, the same decision remy-auth's server middleware makes.
+  Owner rule 2026-09-24: no hand-written language detection; Paraglide's runtime does it.
+- The language hint on localized pages is client-side only (Paraglide's cookie and
+  navigator languages after hydration) and reserves no space.
 - The canonical origin is a build-time value (`PUBLIC_ORIGIN`), since no request
   exists at build time. The owner sets it per deployment.
 - The formats page omits the Cloudflare location section: per-request geolocation is
@@ -119,7 +121,8 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
 ## Acceptance
 
 - `mise run project:setup` in a fresh clone installs the pinned skills and registers
-  MCP using only the included tasks; `mise run project:verify` is green.
+  MCP using only the included tasks (pending item 1); `mise run project:verify` is green
+  (true since 2026-09-24: 18 checks).
 - Every Lighthouse audit passes on the deployed and local builds; the language
   chooser, hint and remembered choice behave as in remy-auth.
 - No file in this repository is copied from remy-auth's `app/` or `packages/ui/src`;

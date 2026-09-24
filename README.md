@@ -1,29 +1,32 @@
 # Remy Auth App
 
-A client-rendered Remy application built entirely from the shared code in
-[remy-auth](https://github.com/joeblew999/remy-auth): the same shadcn/Base UI
-controls, theme, Paraglide catalogs, language handling and Google-facing checks,
-rendered in the browser instead of on the server.
-
-It exists to prove two claims from the remy-auth work:
-
-1. The code there is designed to be reused, in both server- and client-rendered apps.
-2. mise bootstraps the pinned agent skills and MCP tooling for any coding environment,
-   so any project can include them and get the same guidance and checks.
-
-## What works today
-
-The published package `@joeblew999/remy-ui` installs from GitHub Packages and runs here
-with nothing from the remy-auth checkout:
+A client-rendered Remy application built entirely from the published shared package
+[`@joeblew999/remy-ui`](https://github.com/joeblew999/remy-auth/tree/main/packages/ui):
+the same controls, theme, catalogs in English, Spanish and Arabic, language chooser,
+hint and switcher as [remy-auth](https://github.com/joeblew999/remy-auth), rendered in
+the browser instead of on the server, with every public page prerendered at build time
+so the initial HTML still carries what Google's checks look for.
 
 ```sh
 mise install
-GITHUB_TOKEN=$(gh auth token) mise run package:install   # npm install from GitHub Packages via .npmrc
-mise run package:verify    # Vite client build + server render from the package, then checks
+GITHUB_TOKEN=$(gh auth token) mise run project:setup   # GitHub Packages needs a token even for public packages
+mise run project:dev                                    # http://127.0.0.1:5174/en
+mise run project:verify                                 # types, prerendered build, browser, HTTP and Lighthouse checks
 ```
 
-GitHub Packages' npm registry answers 401 without a token even though the package is
-public, so `.npmrc` reads `GITHUB_TOKEN`; any GitHub token with `read:packages` works,
-including the workflow token in Actions. The verification builds a client bundle and
-renders the same components on the server, proving both modes from the published
-package. The app itself is not built yet; see [the plan](.plans/app.md).
+Google Chrome must be installed for the checks. No path to a remy-auth checkout exists
+here; only the published package version in `package.json`.
+
+| Route | Behavior |
+| --- | --- |
+| `/`, `/demo`, `/formats` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
+| `/en`, `/es`, `/ar` | Prerendered home page with localized content, direction, metadata and alternate links |
+| `/{locale}/demo` | Counter and a localized reservation form; interactive after hydration |
+| `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser |
+| `/robots.txt`, `/sitemap.xml` | Prerendered; the sitemap lists every locale page with `hreflang` alternates |
+| Anything else | Static `404.html` with a 404 status |
+
+Language behaviour is the package's, on Paraglide's `url`, `cookie` and `preferredLanguage`
+strategies: remy-auth applies them in a server middleware, this app in the browser after
+hydration. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
+geolocation section, because a prerendered page has no request. See [the plan](.plans/app.md).

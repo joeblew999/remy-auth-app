@@ -1,0 +1,1 @@
+import{a as e,p as t}from"./components-TmgkSkkA.js";import{t as n}from"./jsx-runtime-CNjUVJGA.js";import{n as r,t as i}from"./entry-C9KW5_s7.js";var a=n();function o({location:e}){return r(e.pathname.replace(/\/+$/,``))}var s=e(function(){return(0,a.jsx)(i,{path:t().pathname.replace(/\/+$/,``)})});export{s as default,o as meta};
