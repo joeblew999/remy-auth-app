@@ -24,7 +24,7 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
 
 ## Evidence from remy-auth on 2026-09-24
 
-- `packages/ui` (`@remy/ui`) exports `button`, `styles.css`, `messages`, `locale` and
+- `packages/ui` (`@joeblew999/remy-ui`) exports `button`, `styles.css`, `messages`, `locale` and
   `locale-info`; it is a private npm workspace package, never published.
 - `mise run ui:verify` builds the packed tarball in an isolated client-only consumer.
 - Its [shared UI plan](https://github.com/joeblew999/remy-auth/blob/main/.plans/shared-ui.md)
@@ -59,9 +59,9 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
    `[task_config] includes = ["git::ssh://git@github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]`;
    run `mise run project:setup`, then `mise run skills:list` and `mise run mcp:verify`
    to prove the skills and MCP registration exist in this checkout.
-3. **Distribute the package.** Consume `@remy/ui` as a versioned artifact, per the
-   remy-auth rule that cross-repository consumers do not use sibling paths. Blocked on
-   owner decision 1 below.
+3. **Consume the package.** Install `@joeblew999/remy-ui` from GitHub Packages at a
+   pinned version, per the remy-auth rule that cross-repository consumers never use
+   sibling paths. Blocked only on the first published version (decision 1).
 4. **Build the app.** React Router framework mode with `ssr: false` and a `prerender`
    list, the Cloudflare Vite plugin for a static-assets Worker, the three pages, the
    language chooser, hint and switcher from the package, and Playwright plus Lighthouse
@@ -127,9 +127,13 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
 
 ## Open decisions for the owner
 
-1. **Package distribution.** Publish `@remy/ui` to GitHub Packages or an npm scope, or
-   attach the packed tarball to a remy-auth release. npm cannot install one workspace
-   package from a git URL, so "install from the repo" is not an option.
+1. **Package distribution.** Decided 2026-09-24: GitHub Packages. The package is now
+   `@joeblew999/remy-ui` (GitHub requires the scope to equal the owner) and remy-auth's
+   tag-triggered workflow publishes it with its own `GITHUB_TOKEN`. This repository
+   installs it with an `.npmrc` of `@joeblew999:registry=https://npm.pkg.github.com`
+   and `//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}`, where the token has
+   `read:packages`; in Actions that is the workflow token, locally a fine-grained
+   token the owner creates. The first published version is still the owner's call.
 2. **Metadata in a client-rendered app.** Decided 2026-09-24: prerender every public
    page. See "Prerendering decision" below.
 3. **Where the includable tasks live.** Inside remy-auth (`tasks/`) or a separate
