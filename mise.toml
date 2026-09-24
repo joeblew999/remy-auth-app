@@ -5,6 +5,10 @@ node = "26.10.0"
 # agent launchers, Cloudflare) is remy-auth's tasks directory, one file per namespace, included
 # by git reference pinned to a commit. Update the ref
 # deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
+# Every task prints its duration and the entry point prints the total, so slow steps show.
+[settings]
+task.timings = true
+
 [task_config]
 includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=46db6b5e4aa5d06a1e6a58744079388bd6869cc9"]
 
