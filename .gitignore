@@ -6,3 +6,6 @@ build/
 .mcp.json
 .codex/
 *.bak
+# Installed by mise run skills:install from skills-lock.json; not committed.
+.agents/skills/
+.claude/skills/

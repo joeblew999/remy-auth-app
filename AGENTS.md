@@ -9,6 +9,9 @@ them over your own defaults.
    [GUI plan](https://github.com/joeblew999/remy-auth/blob/main/.plans/gui.md); this app consumes that work.
 
 Run project commands through `mise run <namespace:action>` once the bootstrap exists.
+Start by running `mise run project:setup`: it installs dependencies and the pinned skills (not
+committed; `skills-lock.json` records them) and registers MCP, then verifies.
+
 Before reporting work as done, run the verification task and report its real result.
 Task descriptions (`mise tasks ls`) say how long each task takes and what may run at the same
 time: run post-deploy checks in the background and keep working; state the expected duration
