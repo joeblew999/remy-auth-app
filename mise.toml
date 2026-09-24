@@ -5,54 +5,12 @@ node = "26.10.0"
 # is remy-auth's tasks directory, included by git reference pinned to a commit. Update the ref
 # deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=9e6bb7dabe5c536bfc15d68909606ec132b17cf4"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=1bb27969fcc5f02352075cd17cdc055185aab1ca"]
 
 [env]
-# Public origin baked into canonical and alternate links at build time; cf:deploy overrides it.
+# Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is
+# overridden here. PUBLIC_ORIGIN is the local origin baked into prerendered links for tests;
+# cf:deploy builds with DEPLOY_ORIGIN instead.
+PREVIEW_PORT = "4174"
 PUBLIC_ORIGIN = "http://127.0.0.1:4174"
-
-[tasks."project:setup"]
-description = "Install dependencies (GITHUB_TOKEN with read:packages for the shared UI), the shared skills and MCP registration, then verify"
-dir = "{{config_root}}"
-run = ["npm ci", { task = "skills:install" }, { task = "mcp:register" }, { task = "project:verify" }]
-
-[tasks."project:typecheck"]
-description = "Generate route types and check the app"
-dir = "{{config_root}}"
-run = ["./node_modules/.bin/react-router typegen", "./node_modules/.bin/tsc"]
-
-[tasks."project:dev"]
-description = "Run the client-rendered app with hot reload at http://127.0.0.1:5174"
-dir = "{{config_root}}"
-raw = true
-run = "./node_modules/.bin/react-router dev"
-
-[tasks."project:build"]
-description = "Prerender every public page and dry-run the static-assets deployment"
-dir = "{{config_root}}"
-run = ["./node_modules/.bin/react-router build", "./node_modules/.bin/wrangler deploy --dry-run"]
-
-[tasks."project:preview"]
-description = "Build, then serve the prerendered site on Cloudflare's local asset host at http://127.0.0.1:4174"
-dir = "{{config_root}}"
-depends = ["project:build"]
-raw = true
-run = "./node_modules/.bin/wrangler dev --ip 127.0.0.1 --port 4174"
-
-[tasks."project:test"]
-description = "Build, then run the browser, HTTP and Lighthouse checks against the prerendered site"
-dir = "{{config_root}}"
-depends = ["project:build"]
-env = { TEST_TARGET = "local" }
-run = "./node_modules/.bin/playwright test"
-
-[tasks."project:verify"]
-description = "Verify tasks, dependencies, types, the prerendered build and every check"
-dir = "{{config_root}}"
-run = ["mise tasks validate", "npm ls --depth=0", { task = "mcp:verify" }, { task = "project:typecheck" }, { task = "project:test" }]
-
-[tasks."cf:deploy"]
-description = "Prerender with the deployed origin and upload the static assets to Cloudflare"
-dir = "{{config_root}}"
-env = { PUBLIC_ORIGIN = "https://remy-auth-app.gedw99.workers.dev" }
-run = ["./node_modules/.bin/react-router build", "./node_modules/.bin/wrangler deploy"]
+DEPLOY_ORIGIN = "https://remy-auth-app.gedw99.workers.dev"

@@ -42,6 +42,9 @@ Language behaviour is the package's, on Paraglide's `url`, `cookie` and `preferr
 strategies: remy-auth applies them in a server middleware, this app in the browser after
 hydration. The checks are the package's too: `tests/gui.spec.ts` and `tests/lighthouse.spec.ts`
 only call `@joeblew999/remy-ui/checks` with this app's paths, so Google's checks arrive with
-the code. The `project:test:remote`, `project:report`, `cf:*` and agent launcher tasks come
-from the same remy-auth include as the bootstrap. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
+the code. Every mise task comes from the same remy-auth include as the bootstrap, including the
+pipeline (`project:dev`, `build`, `preview`, `test`, `verify`, `cf:deploy`); this repository's
+`mise.toml` holds only its Node pin, the include reference and three inputs (`PREVIEW_PORT`,
+`PUBLIC_ORIGIN`, `DEPLOY_ORIGIN`). Its Playwright configuration is the package's
+`playwrightConfig()`. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
 geolocation section, because a prerendered page has no request. See [the plan](.plans/app.md).
