@@ -1,6 +1,6 @@
 import type { Config } from '@react-router/dev/config';
 import { locales, localizeUrl } from '@joeblew999/remy-ui/runtime';
-import { publicPaths } from './app/paths';
+import { publicPaths } from '@joeblew999/remy-ui/paths';
 
 // Client rendering with every public page prerendered at build time, so the initial HTML
 // carries the content and metadata Google's checks look for. See .plans/app.md.

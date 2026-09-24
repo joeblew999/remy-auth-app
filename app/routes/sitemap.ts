@@ -1,7 +1,7 @@
 import { locales } from '@joeblew999/remy-ui/locale';
 import { alternates } from '@joeblew999/remy-ui/seo';
 import { origin } from '../origin';
-import { publicPaths } from '../paths';
+import { publicPaths } from '@joeblew999/remy-ui/paths';
 export function loader() {
   const entries = locales.flatMap(locale => publicPaths.map(path => {
     const links = alternates(origin, path, locale);

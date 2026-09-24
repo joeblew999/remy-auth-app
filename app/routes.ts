@@ -1,5 +1,5 @@
 import { index, route, type RouteConfig } from '@react-router/dev/routes';
-import { publicPaths } from './paths';
+import { publicPaths } from '@joeblew999/remy-ui/paths';
 export default [
   index('routes/choose.tsx'),
   ...publicPaths.filter(Boolean).map(path => route(path.slice(1), 'routes/unprefixed.tsx', { id: `choose${path}` })),
