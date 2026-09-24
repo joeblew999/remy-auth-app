@@ -60,9 +60,9 @@ first project bootstrapped by including remy-auth's tasks rather than copying th
    `[task_config] includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=<commit>"]`;
    run `mise run project:setup`, then `mise run skills:list` and `mise run mcp:verify`
    to prove the skills and MCP registration exist in this checkout.
-3. **Consume the package.** Install `@joeblew999/remy-ui` from GitHub Packages at a
-   pinned version, per the remy-auth rule that cross-repository consumers never use
-   sibling paths. Blocked only on the first published version (decision 1).
+3. **Consume the package.** Done 2026-09-24 for the proof: `@joeblew999/remy-ui@0.1.0`
+   from GitHub Packages, with `mise run package:verify` building a client bundle and a
+   server render from it. The app's own build (item 4) reuses this setup.
 4. **Build the app.** React Router framework mode with `ssr: false` and a `prerender`
    list, the Cloudflare Vite plugin for a static-assets Worker, the three pages, the
    language chooser, hint and switcher from the package, and Playwright plus Lighthouse
@@ -133,8 +133,9 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
    tag-triggered workflow publishes it with its own `GITHUB_TOKEN`. This repository
    installs it with an `.npmrc` of `@joeblew999:registry=https://npm.pkg.github.com`
    and `//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}`, where the token has
-   `read:packages`; in Actions that is the workflow token, locally a fine-grained
-   token the owner creates. The first published version is still the owner's call.
+   `read:packages`; in Actions that is the workflow token, locally `gh auth token`.
+   Verified 2026-09-24: version 0.1.0 is published, installs here, and
+   `mise run package:verify` builds a client bundle and a server render from it.
 2. **Metadata in a client-rendered app.** Decided 2026-09-24: prerender every public
    page. See "Prerendering decision" below.
 3. **Where the includable tasks live.** Inside remy-auth (`tasks/`) or a separate
@@ -142,6 +143,6 @@ sitemap is a prerendered file and that an unknown path returns 404, not the fall
    repository decouples releases. remy-auth's principle against the retired shared
    task library still applies: the include must be pinned to a commit and reviewed on
    update, not tracked at `main`.
-4. **Visibility.** Decided 2026-09-24: both repositories are public. The package's
-   visibility on GitHub Packages follows the linked repository; installs are still
-   expected to need a token, to be confirmed at the first publish.
+4. **Visibility.** Decided 2026-09-24: both repositories are public, and the package
+   is public on GitHub Packages. Confirmed the same day: its npm registry still returns
+   401 without a token, so installs need `read:packages` regardless.

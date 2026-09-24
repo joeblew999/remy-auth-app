@@ -1,0 +1,16 @@
+[tools]
+node = "26.10.0"
+
+[tasks."package:install"]
+description = "Install the published shared UI from GitHub Packages and the build tools"
+dir = "{{config_root}}"
+run = "npm install --no-audit --no-fund"
+
+[tasks."package:verify"]
+description = "Build a client bundle and a server render from the published @joeblew999/remy-ui, then check both"
+dir = "{{config_root}}"
+run = [
+  "./node_modules/.bin/vite build",
+  "./node_modules/.bin/vite build --ssr src/server.tsx --outDir dist/server",
+  "node scripts/verify-package.mjs",
+]
