@@ -3,6 +3,7 @@ import { publicPaths } from '@joeblew999/remy-ui/paths';
 import { navigationBlockingChecks } from '@joeblew999/remy-ui/showcase/navigation-blocking.checks';
 import { preloadChecks } from '@joeblew999/remy-ui/showcase/preload.checks';
 import { searchParamsChecks } from '@joeblew999/remy-ui/showcase/search-params.checks';
+import { devicePlaceChecks } from '@joeblew999/remy-ui/showcase/device-place.checks';
 
 // Every check here is the package's, including the showcase rows a prerendered app can show.
 publicPageChecks({ paths: publicPaths, prerendered: true });
@@ -13,3 +14,4 @@ observabilityChecks({ service: 'remy-auth-app', paths: publicPaths });
 navigationBlockingChecks();
 preloadChecks({ serverFn: false });
 searchParamsChecks({ serverRendered: false });
+devicePlaceChecks();
