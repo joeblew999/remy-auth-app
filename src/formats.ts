@@ -1,6 +1,6 @@
 import { getLocale } from '@joeblew999/remy-ui/locale';
 import { localeInfo } from '@joeblew999/remy-ui/locale-info';
-import { validateSearch } from '@joeblew999/remy-ui/showcase/search-params';
+import { formatsSearchSchema } from '@joeblew999/remy-ui/showcase/search-params';
 
 /**
  * The route options both formats routes share (site /formats and app /app/formats).
@@ -11,6 +11,6 @@ export const formatsRouteOptions = {
   // ?currency, ?count and ?calendar, validated with defaults (each route strips the defaults from
   // its URLs). The prerendered HTML cannot know them, so the controls show the chosen values once
   // hydrated (prerenderedChoiceCards).
-  validateSearch,
+  validateSearch: formatsSearchSchema,
   loader: () => ({ info: localeInfo(getLocale()) }),
 };
