@@ -5,7 +5,7 @@ import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { FontaineTransform } from 'fontaine';
 import { baseLocale, locales, localizeHref } from '@joeblew999/remy-ui/runtime';
-import { publicPaths } from '@joeblew999/remy-ui/paths';
+import { allPaths } from '@joeblew999/remy-ui/paths';
 import { notFoundPath } from './src/paths.ts';
 
 // TanStack Start, fully prerendered: every public page is rendered once at build time by a
@@ -14,13 +14,13 @@ import { notFoundPath } from './src/paths.ts';
 // In development the Start Worker is the entry instead, so `vite dev` renders every route.
 const prerenderWorker = { name: 'remy-auth-app-prerender', main: './src/server.ts', compatibility_flags: ['nodejs_compat'] };
 
-// Every public path in every locale, from Paraglide's URL patterns (localizeHref), plus the
+// Every page (site and app, paths.js) in every locale, from Paraglide's URL patterns (localizeHref), plus the
 // un-localized entry lists; robots.txt and the sitemap are server routes written as files.
 // The localized not-found route becomes each locale's 404.html: Cloudflare serves the nearest
 // one with a 404 status (not_found_handling "404-page"), and /404.html is the English fallback.
 const pages = [
-  ...publicPaths.map(path => ({ path: path || '/' })),
-  ...locales.flatMap(locale => publicPaths.map(path => ({ path: localizeHref(path || '/', { locale }) }))),
+  ...allPaths.map(path => ({ path: path || '/' })),
+  ...locales.flatMap(locale => allPaths.map(path => ({ path: localizeHref(path || '/', { locale }) }))),
   { path: '/robots.txt' }, { path: '/sitemap.xml' },
   ...locales.map(locale => ({
     path: localizeHref(notFoundPath, { locale }),

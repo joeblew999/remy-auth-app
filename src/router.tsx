@@ -1,14 +1,14 @@
 import { createRouter } from '@tanstack/react-router';
 import { extractLocaleFromUrl } from '@joeblew999/remy-ui/runtime';
-import { publicPaths } from '@joeblew999/remy-ui/paths';
+import { allPaths } from '@joeblew999/remy-ui/paths';
 import { localeRewrite } from '@joeblew999/remy-ui/tanstack';
 import { entryBase } from './paths';
 import { routeTree } from './routeTree.gen';
 
-/** The public entry path ('' for /) of an un-localized entry URL, else undefined. */
+/** The entry path ('' for /) of an un-localized entry URL, else undefined. */
 function entryPath(url: URL) {
   const path = url.pathname.replace(/\/+$/, '');
-  return !extractLocaleFromUrl(url) && publicPaths.includes(path) ? path : undefined;
+  return !extractLocaleFromUrl(url) && allPaths.includes(path) ? path : undefined;
 }
 function withPath(url: URL, pathname: string) {
   const out = new URL(url);

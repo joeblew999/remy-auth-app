@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { locales } from '@joeblew999/remy-ui/locale';
-import { publicPaths } from '@joeblew999/remy-ui/paths';
+import { sitePaths } from '@joeblew999/remy-ui/paths';
 import { alternates } from '@joeblew999/remy-ui/seo';
 import { origin } from '../origin';
 
-// Every public path in every locale with its hreflang alternates; written to dist/client/sitemap.xml at build time.
+// Every site page (paths.js; app pages are noindex) in every locale with its hreflang alternates; written to dist/client/sitemap.xml at build time.
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
     handlers: {
       GET: () => {
-        const entries = locales.flatMap(locale => publicPaths.map(path => {
+        const entries = locales.flatMap(locale => sitePaths.map(path => {
           const links = alternates(origin, path, locale);
           const xhtml = links.alternates.map(link => `<xhtml:link rel="alternate" hreflang="${link.hrefLang}" href="${link.href}"/>`).join('');
           return `<url><loc>${links.canonical}</loc>${xhtml}</url>`;

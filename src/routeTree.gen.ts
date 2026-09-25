@@ -10,21 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoRouteImport } from './routes/demo'
 import { Route as FormatsRouteImport } from './routes/formats'
 import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppDemoRouteImport } from './routes/app.demo'
+import { Route as AppLocationRouteImport } from './routes/app.location'
 import { Route as ChooseSplatRouteImport } from './routes/choose/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoRoute = DemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FormatsRoute = FormatsRouteImport.update({
@@ -47,6 +44,21 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/app/',
+  path: '/app/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppDemoRoute = AppDemoRouteImport.update({
+  id: '/app/demo',
+  path: '/app/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppLocationRoute = AppLocationRouteImport.update({
+  id: '/app/location',
+  path: '/app/location',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChooseSplatRoute = ChooseSplatRouteImport.update({
   id: '/choose/$',
   path: '/choose/$',
@@ -55,70 +67,84 @@ const ChooseSplatRoute = ChooseSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/demo': typeof DemoRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/demo': typeof AppDemoRoute
+  '/app/location': typeof AppLocationRoute
   '/choose/$': typeof ChooseSplatRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/demo': typeof DemoRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/demo': typeof AppDemoRoute
+  '/app/location': typeof AppLocationRoute
   '/choose/$': typeof ChooseSplatRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/demo': typeof DemoRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/demo': typeof AppDemoRoute
+  '/app/location': typeof AppLocationRoute
   '/choose/$': typeof ChooseSplatRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/demo'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/demo'
+    | '/app/location'
     | '/choose/$'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/demo'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/demo'
+    | '/app/location'
     | '/choose/$'
+    | '/app'
   id:
     | '__root__'
     | '/'
-    | '/demo'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/demo'
+    | '/app/location'
     | '/choose/$'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DemoRoute: typeof DemoRoute
   FormatsRoute: typeof FormatsRoute
   NotFoundRoute: typeof NotFoundRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  AppDemoRoute: typeof AppDemoRoute
+  AppLocationRoute: typeof AppLocationRoute
   ChooseSplatRoute: typeof ChooseSplatRoute
+  AppIndexRoute: typeof AppIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -128,13 +154,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formats': {
@@ -165,6 +184,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/': {
+      id: '/app/'
+      path: '/app'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/demo': {
+      id: '/app/demo'
+      path: '/app/demo'
+      fullPath: '/app/demo'
+      preLoaderRoute: typeof AppDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/location': {
+      id: '/app/location'
+      path: '/app/location'
+      fullPath: '/app/location'
+      preLoaderRoute: typeof AppLocationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/choose/$': {
       id: '/choose/$'
       path: '/choose/$'
@@ -177,12 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DemoRoute: DemoRoute,
   FormatsRoute: FormatsRoute,
   NotFoundRoute: NotFoundRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  AppDemoRoute: AppDemoRoute,
+  AppLocationRoute: AppLocationRoute,
   ChooseSplatRoute: ChooseSplatRoute,
+  AppIndexRoute: AppIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
