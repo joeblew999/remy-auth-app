@@ -32,9 +32,10 @@ Packages needs a token even for public packages, hence `GITHUB_TOKEN`.
 
 | Route | Behavior |
 | --- | --- |
-| `/`, `/formats`, `/app`, `/app/demo`, `/app/location` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
+| `/`, `/formats`, `/app`, `/app/demo`, `/app/formats`, `/app/location` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
 | `/en`, `/es`, `/ar` | Prerendered home page with localized content, direction, metadata and alternate links |
-| `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser |
+| `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser; the currency, count and calendar controls are links with search params (defaults in the HTML, the address's values once hydrated) |
+| `/{locale}/app/formats` | The same formats content in the app shell |
 | `/{locale}/app` | App home in the app shell (shadcn's sidebar-16); app pages need JavaScript and carry `noindex` |
 | `/{locale}/app/demo` | Counter and a localized reservation form; interactive after hydration |
 | `/{locale}/app/location` | The device's own location, asked in the browser only on request |
