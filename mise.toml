@@ -1,3 +1,7 @@
+# The included tasks rely on mise 2026.9.12 (task run lists, env templating, include overrides);
+# an include cannot set this, so every consumer states it.
+min_version = "2026.9.12"
+
 [tools]
 node = "26.10.0"
 
@@ -16,7 +20,8 @@ includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=v0.10.5
 [env]
 # Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is
 # overridden here. PUBLIC_ORIGIN is the local origin baked into prerendered links for tests;
-# cf:deploy builds with DEPLOY_ORIGIN instead.
-PREVIEW_PORT = "4174"
-PUBLIC_ORIGIN = "http://127.0.0.1:4174"
+# cf:deploy builds with DEPLOY_ORIGIN instead. A worktree or agent picks its own port from the
+# shell (PREVIEW_PORT=4232 mise run project:verify) and PUBLIC_ORIGIN follows it.
+PREVIEW_PORT = "{{ get_env(name='PREVIEW_PORT', default='4174') }}"
+PUBLIC_ORIGIN = "http://127.0.0.1:{{ env.PREVIEW_PORT }}"
 DEPLOY_ORIGIN = "https://remy-auth-app.gedw99.workers.dev"
