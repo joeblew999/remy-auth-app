@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { baseLocale, shouldRedirect } from '@joeblew999/remy-ui/runtime';
-import { LanguageSwitcher } from '@joeblew999/remy-ui/language';
+import { LanguageLinks } from '@joeblew999/remy-ui/language';
 import { alternates } from '@joeblew999/remy-ui/seo';
 import { m } from '@joeblew999/remy-ui/messages';
 import { origin } from './origin';
@@ -28,6 +28,6 @@ export function Entry({ path }: { path: string }) {
   }, [path]);
   return <main id="main" className="mx-auto max-w-xl px-6 py-20">
     <h1 className="mb-6 text-3xl font-semibold tracking-tight">{m.language_label({}, { locale: baseLocale })}</h1>
-    <LanguageSwitcher locale={baseLocale} path={path} />
+    <LanguageLinks locale={baseLocale} path={path} />
   </main>;
 }
