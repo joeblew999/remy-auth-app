@@ -5,7 +5,7 @@ import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { baseLocale, locales, localizeHref } from '@joeblew999/remy-ui/runtime';
 import { publicPaths } from '@joeblew999/remy-ui/paths';
-import { notFoundPath } from './src/paths';
+import { notFoundPath } from './src/paths.ts';
 
 // TanStack Start, fully prerendered: every public page is rendered once at build time by a
 // Start Worker (src/server.ts) and written to dist/client. The deployed Worker is wrangler.jsonc's
@@ -37,7 +37,8 @@ export default defineConfig(({ command }) => ({
       : cloudflare({ config: prerenderWorker, viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
     tanstackStart({
-      prerender: { enabled: true, crawlLinks: false, autoStaticPathsDiscovery: false, failOnError: true },
+      // Retries absorb a preview server that is not ready yet; a page that still fails fails the build.
+      prerender: { enabled: true, crawlLinks: false, autoStaticPathsDiscovery: false, failOnError: true, retryCount: 2, retryDelay: 1000 },
       pages,
     }),
     viteReact(),
