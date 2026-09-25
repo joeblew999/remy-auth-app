@@ -1,4 +1,6 @@
+import { QueryClient } from '@tanstack/react-query';
 import { createRouter } from '@tanstack/react-router';
+import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { extractLocaleFromUrl } from '@joeblew999/remy-ui/runtime';
 import { allPaths } from '@joeblew999/remy-ui/paths';
 import { localeRewrite } from '@joeblew999/remy-ui/tanstack';
@@ -21,10 +23,14 @@ function withPath(url: URL, pathname: string) {
  * shared rewrite de-localizes /es/formats to /formats and localizes links on the way out. Entry
  * URLs would de-localize to the same routes as the base locale's pages (/ and /en), so they are
  * routed to the entry lists under `entryBase` instead, and shown as themselves.
+ * Each router gets its own QueryClient (TanStack Query, for remy-auth's live status in the browser);
+ * the SSR integration wraps the app in its QueryClientProvider, as in remy-auth.
  */
 export function getRouter() {
-  return createRouter({
+  const queryClient = new QueryClient();
+  const router = createRouter({
     routeTree,
+    context: { queryClient },
     rewrite: {
       input: ({ url }) => {
         const path = entryPath(url);
@@ -38,6 +44,8 @@ export function getRouter() {
     defaultPreload: 'intent',
     scrollRestoration: true,
   });
+  setupRouterSsrQueryIntegration({ router, queryClient });
+  return router;
 }
 
 declare module '@tanstack/react-router' {

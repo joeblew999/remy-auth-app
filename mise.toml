@@ -25,3 +25,6 @@ includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=v0.10.5
 PREVIEW_PORT = "{{ get_env(name='PREVIEW_PORT', default='4174') }}"
 PUBLIC_ORIGIN = "http://127.0.0.1:{{ env.PREVIEW_PORT }}"
 DEPLOY_ORIGIN = "https://remy-auth-app.gedw99.workers.dev"
+# remy-auth, whose API (@joeblew999/remy-auth-contract) the status card on /app asks from the
+# browser; only the build for DEPLOY_ORIGIN, the origin remy-auth registered, uses it (vite.config.ts).
+REMY_AUTH_ORIGIN = "https://remy-auth.gedw99.workers.dev"

@@ -53,7 +53,7 @@ CI (`.github/workflows/google.yml`) runs the types and Google's Lighthouse audit
 | `/{locale}` | Prerendered home page with localized content, direction, metadata and alternate links |
 | `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser; the currency, count and calendar controls are links with search params (defaults in the HTML, the address's values once hydrated) |
 | `/{locale}/app/formats` | The same formats content in the app shell |
-| `/{locale}/app` | App home in the app shell (shadcn's sidebar-16); app pages need JavaScript and carry `noindex` |
+| `/{locale}/app` | App home in the app shell (shadcn's sidebar-16), with remy-auth's live status: the browser asks remy-auth's `GET /api/status` through its published contract (`@joeblew999/remy-auth-contract`, every answer validated), only in the build for `DEPLOY_ORIGIN`, the origin remy-auth allows (CORS); app pages need JavaScript and carry `noindex` |
 | `/{locale}/app/demo` | Counter and a localized reservation form; interactive after hydration |
 | `/{locale}/app/location` | The device's own location, asked in the browser only on request |
 | `/robots.txt`, `/sitemap.xml` | Prerendered; the sitemap lists every site page (not `/app`) in every locale with `hreflang` alternates |
@@ -72,3 +72,9 @@ only call `@joeblew999/remy-ui/checks` with this app's paths, so Google's checks
 the code. Its Playwright configuration is the package's `playwrightConfig()`. Compared with
 remy-auth's server-rendered pages, this app has no Cloudflare geolocation section, because a
 prerendered page has no request. See [the plan](.plans/done/app.md), now done.
+the code. Every mise task comes from the same remy-auth include as the bootstrap, including the
+pipeline (`project:dev`, `build`, `preview`, `test`, `verify`, `cf:deploy`); this repository's
+`mise.toml` holds only its Node pin, the include reference and four inputs (`PREVIEW_PORT`,
+`PUBLIC_ORIGIN`, `DEPLOY_ORIGIN`, `REMY_AUTH_ORIGIN`). Its Playwright configuration is the package's
+`playwrightConfig()`. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
+geolocation section, because a prerendered page has no request. See [the plan](.plans/done/app.md), now done.
