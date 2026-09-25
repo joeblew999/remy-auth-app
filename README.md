@@ -32,11 +32,13 @@ Packages needs a token even for public packages, hence `GITHUB_TOKEN`.
 
 | Route | Behavior |
 | --- | --- |
-| `/`, `/demo`, `/formats` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
+| `/`, `/formats`, `/app`, `/app/demo`, `/app/location` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
 | `/en`, `/es`, `/ar` | Prerendered home page with localized content, direction, metadata and alternate links |
-| `/{locale}/demo` | Counter and a localized reservation form; interactive after hydration |
 | `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser |
-| `/robots.txt`, `/sitemap.xml` | Prerendered; the sitemap lists every locale page with `hreflang` alternates |
+| `/{locale}/app` | App home in the app shell (shadcn's sidebar-16); app pages need JavaScript and carry `noindex` |
+| `/{locale}/app/demo` | Counter and a localized reservation form; interactive after hydration |
+| `/{locale}/app/location` | The device's own location, asked in the browser only on request |
+| `/robots.txt`, `/sitemap.xml` | Prerendered; the sitemap lists every site page (not `/app`) in every locale with `hreflang` alternates |
 | Anything else | The language's prerendered `404.html` (`/es/…` gets Spanish, anything without a language English), without scripts, with a 404 status |
 
 The build (`vite build`, see `vite.config.ts`) renders the pages with a TanStack Start Worker
