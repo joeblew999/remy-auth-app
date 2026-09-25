@@ -1,11 +1,13 @@
-import { HeadContent, Outlet, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router';
+import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
+import type { QueryClient } from '@tanstack/react-query';
 import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
 import { DirectionProvider } from '@joeblew999/remy-ui/components/direction';
 import { entryBase, notFoundPath } from '../paths';
 import { NotFound, ErrorPage } from '../problem';
 import '../styles.css';
 
-export const Route = createRootRoute({
+// Router context: the QueryClient from getRouter (src/router.tsx).
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [{ charSet: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
     links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],

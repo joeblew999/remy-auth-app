@@ -28,6 +28,11 @@ const pages = [
   })),
 ];
 
+// remy-auth's API answers this app's pages only on the origin remy-auth registered (CORS, its
+// src/api/origins.ts): DEPLOY_ORIGIN. So only the build for that origin asks it (cf:deploy builds
+// with PUBLIC_ORIGIN = DEPLOY_ORIGIN); local, test and preview builds get no origin and ask nothing.
+const remyAuthOrigin = process.env.PUBLIC_ORIGIN && process.env.PUBLIC_ORIGIN === process.env.DEPLOY_ORIGIN ? process.env.REMY_AUTH_ORIGIN ?? '' : '';
+
 export default defineConfig(({ command }) => ({
   plugins: [
     command === 'build'
@@ -51,5 +56,6 @@ export default defineConfig(({ command }) => ({
   ],
   // PUBLIC_ORIGIN is the deployed origin for canonical and alternate links, set at build time.
   envPrefix: ['VITE_', 'PUBLIC_'],
+  define: { 'import.meta.env.PUBLIC_REMY_AUTH_ORIGIN': JSON.stringify(remyAuthOrigin) },
   server: { host: '127.0.0.1', port: 5174, strictPort: true },
 }));
