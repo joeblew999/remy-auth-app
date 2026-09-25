@@ -2,7 +2,7 @@ import { HeadContent, Outlet, Scripts, createRootRoute, useRouterState } from '@
 import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
 import { DirectionProvider } from '@joeblew999/remy-ui/components/direction';
 import { entryBase, notFoundPath } from '../paths';
-import { NotFound, ErrorPage } from '../problem';
+import { NotFound, ErrorPage } from '@joeblew999/remy-ui/problem';
 import '../styles.css';
 
 export const Route = createRootRoute({

@@ -4,8 +4,7 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { FontaineTransform } from 'fontaine';
-import { baseLocale, locales, localizeHref } from '@joeblew999/remy-ui/runtime';
-import { allPaths } from '@joeblew999/remy-ui/paths';
+import { prerenderPages } from '@joeblew999/remy-ui/prerender';
 import { notFoundPath } from './src/paths.ts';
 
 // TanStack Start, fully prerendered: every public page is rendered once at build time by a
@@ -14,19 +13,10 @@ import { notFoundPath } from './src/paths.ts';
 // In development the Start Worker is the entry instead, so `vite dev` renders every route.
 const prerenderWorker = { name: 'remy-auth-app-prerender', main: './src/server.ts', compatibility_flags: ['nodejs_compat'] };
 
-// Every page (site and app, paths.js) in every locale, from Paraglide's URL patterns (localizeHref), plus the
-// un-localized entry lists; robots.txt and the sitemap are server routes written as files.
-// The localized not-found route becomes each locale's 404.html: Cloudflare serves the nearest
-// one with a 404 status (not_found_handling "404-page"), and /404.html is the English fallback.
-const pages = [
-  ...allPaths.map(path => ({ path: path || '/' })),
-  ...locales.flatMap(locale => allPaths.map(path => ({ path: localizeHref(path || '/', { locale }) }))),
-  { path: '/robots.txt' }, { path: '/sitemap.xml' },
-  ...locales.map(locale => ({
-    path: localizeHref(notFoundPath, { locale }),
-    prerender: { outputPath: locale === baseLocale ? '/404.html' : `/${locale}/404.html` },
-  })),
-];
+// The package's page list: every page (site and app, paths.js) un-localized and in every locale,
+// robots.txt and the sitemap written as files, and the localized not-found route as each locale's
+// 404.html (Cloudflare serves the nearest one with a 404 status; /404.html is the English fallback).
+const pages = prerenderPages({ notFoundPath });
 
 export default defineConfig(({ command }) => ({
   plugins: [

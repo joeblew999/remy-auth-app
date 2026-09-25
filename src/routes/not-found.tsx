@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { NotFound } from '../problem';
+import { NotFound } from '@joeblew999/remy-ui/problem';
 
 // notFoundPath (../paths.ts); file routes need the literal. Rendered with 200 only so prerendering
 // can write each locale's 404.html (vite.config.ts); the asset host serves the nearest one with a
