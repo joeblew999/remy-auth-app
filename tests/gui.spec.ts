@@ -1,4 +1,4 @@
-import { zoneChecks, publicPageChecks, entryChecks, demoChecks, formatsChecks, observabilityChecks } from '@joeblew999/remy-ui/checks';
+import { zoneChecks, publicPageChecks, entryChecks, demoChecks, formatsChecks, textChecks, observabilityChecks } from '@joeblew999/remy-ui/checks';
 import { sitePaths, appPaths, allPaths } from '@joeblew999/remy-ui/paths';
 import { navigationBlockingChecks } from '@joeblew999/remy-ui/showcase/navigation-blocking.checks';
 import { preloadChecks } from '@joeblew999/remy-ui/showcase/preload.checks';
@@ -12,6 +12,7 @@ publicPageChecks({ paths: sitePaths, prerendered: true });
 entryChecks({ paths: allPaths, mode: 'static' });
 demoChecks();
 formatsChecks();
+textChecks({ paths: allPaths });
 observabilityChecks({ service: 'remy-auth-app', paths: allPaths });
 navigationBlockingChecks();
 preloadChecks({ serverFn: false });
