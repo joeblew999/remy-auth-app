@@ -3,12 +3,12 @@ import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
 import { DirectionProvider } from '@joeblew999/remy-ui/components/direction';
 import { entryBase, notFoundPath } from '../paths';
 import { NotFound, ErrorPage } from '../problem';
-import styles from '../styles.css?url';
+import '../styles.css';
 
 export const Route = createRootRoute({
   head: () => ({
     meta: [{ charSet: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-    links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }, { rel: 'stylesheet', href: styles }],
+    links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }],
   }),
   shellComponent: Document,
   component: Outlet,

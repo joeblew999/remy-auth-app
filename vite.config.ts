@@ -41,6 +41,8 @@ export default defineConfig(({ command }) => ({
     FontaineTransform.vite({ fallbacks: { 'Geist Variable': ['Arial'] } }),
     tailwindcss(),
     tanstackStart({
+      // TanStack Start's own option: the stylesheet inlined, so the first paint needs no CSS fetch.
+      server: { build: { inlineCss: true } },
       // Retries absorb a preview server that is not ready yet; a page that still fails fails the build.
       prerender: { enabled: true, crawlLinks: false, autoStaticPathsDiscovery: false, failOnError: true, retryCount: 2, retryDelay: 1000 },
       pages,
