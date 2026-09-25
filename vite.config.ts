@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import { FontaineTransform } from 'fontaine';
 import { baseLocale, locales, localizeHref } from '@joeblew999/remy-ui/runtime';
 import { publicPaths } from '@joeblew999/remy-ui/paths';
 import { notFoundPath } from './src/paths.ts';
@@ -35,6 +36,9 @@ export default defineConfig(({ command }) => ({
         viteEnvironment: { name: 'ssr' },
       } } })
       : cloudflare({ config: prerenderWorker, viteEnvironment: { name: 'ssr' } }),
+    // Fallback faces sized to the web fonts (size-adjust and ascent/descent overrides, as Next.js
+    // generates), so the swap to Geist keeps the layout and LCP; fonts.css lists them. Before Tailwind.
+    FontaineTransform.vite({ fallbacks: { 'Geist Variable': ['Arial'] } }),
     tailwindcss(),
     tanstackStart({
       // Retries absorb a preview server that is not ready yet; a page that still fails fails the build.

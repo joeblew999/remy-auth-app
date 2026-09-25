@@ -1,5 +1,6 @@
 import { HeadContent, Outlet, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router';
 import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
+import { DirectionProvider } from '@joeblew999/remy-ui/components/direction';
 import { entryBase, notFoundPath } from '../paths';
 import { NotFound, ErrorPage } from '../problem';
 import styles from '../styles.css?url';
@@ -28,6 +29,6 @@ function Document({ children }: { children: React.ReactNode }) {
   const locale = entry ? baseLocale : getLocale();
   return <html lang={locale} dir={direction(locale)}>
     <head><HeadContent /></head>
-    <body>{children}{pathname !== notFoundPath && <Scripts />}</body>
+    <body><DirectionProvider direction={direction(locale)}>{children}</DirectionProvider>{pathname !== notFoundPath && <Scripts />}</body>
   </html>;
 }
