@@ -93,6 +93,12 @@ what make Google's guidance verifiable, and they need static HTML. Prerendering 
 those checks meaningful in a client-rendered app, and removes the dependency on
 Google's deferred JavaScript rendering.
 
+**Since 2026-09-25 on TanStack Start** (item 4 of remy-auth's
+[TanStack plan](https://github.com/joeblew999/remy-auth/blob/main/.plans/tanstack.md)): the
+decision stands; `tanstackStart({ prerender })` renders the same list, from `localizeHref`, in a
+build-only Start Worker, and each language's not-found page is prerendered to its `404.html`
+without scripts. The React Router rules below are kept as the record of the first build.
+
 **Rules from the pinned React Router docs** (`node_modules/react-router/docs/how-to/pre-rendering.md`):
 loaders on prerendered routes run at build time against a synthetic `Request`, so they
 see no `Accept-Language`, cookies or Cloudflare geolocation; `headers` and `action`
