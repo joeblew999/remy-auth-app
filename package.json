@@ -6,7 +6,7 @@
     "node": ">=26.10.0 <27"
   },
   "dependencies": {
-    "@joeblew999/remy-ui": "0.9.0-rc.0",
+    "@joeblew999/remy-ui": "0.9.1",
     "@tanstack/react-router": "1.170.39",
     "@tanstack/react-start": "1.168.58",
     "lucide-react": "1.48.0",

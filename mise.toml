@@ -3,14 +3,15 @@ node = "26.10.0"
 
 # Every task (pipeline, pinned skills, MCP registration, Chrome DevTools, Google's web guidance,
 # agent launchers, Cloudflare) is remy-auth's tasks directory, one file per namespace, included
-# by git reference pinned to a commit. Update the ref
-# deliberately; MISE_TASK_REMOTE_NO_CACHE=true refreshes mise's cache of it.
+# by git reference pinned to the release tag that matches @joeblew999/remy-ui in package.json
+# (change both together). MISE_ENV=dev uses remy-auth's main (mise.dev.toml); a gitignored
+# mise.local.toml can point at a local checkout. See remy-auth's tasks/README.md.
 # Every task prints its duration and the entry point prints the total, so slow steps show.
 [settings]
 task.timings = true
 
 [task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=c068f712c67944c1a12c8517e7abd72b785a42a1"]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=v0.9.1"]
 
 [env]
 # Inputs for the shared pipeline tasks. Every task comes from remy-auth's include; nothing is

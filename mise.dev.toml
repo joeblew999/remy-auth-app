@@ -1,0 +1,4 @@
+# MISE_ENV=dev: the shared tasks from remy-auth's development line instead of the release tag.
+# Refresh with MISE_TASK_REMOTE_NO_CACHE=true after main moves.
+[task_config]
+includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=main"]
