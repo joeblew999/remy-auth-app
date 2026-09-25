@@ -5,15 +5,16 @@ import { alternates } from '@joeblew999/remy-ui/seo';
 import { m } from '@joeblew999/remy-ui/messages';
 import { origin } from './origin';
 
-/** Metadata for an entry URL without a locale: canonical to itself, every language version linked, x-default to itself. */
-export function entryMeta(path: string) {
+/** head() for an entry URL without a locale: canonical to itself, every language version linked, x-default to itself. */
+export function entryHead(path: string) {
   const locale = baseLocale;
-  return [
-    { title: `${m.language_label({}, { locale })} | Remy` },
-    { name: 'description', content: m.home_description({}, { locale }) },
-    { tagName: 'link', rel: 'canonical', href: `${origin}${path || '/'}` },
-    ...alternates(origin, path, locale).alternates.map(link => ({ tagName: 'link', rel: 'alternate', hrefLang: link.hrefLang, href: link.href })),
-  ];
+  return {
+    meta: [{ title: `${m.language_label({}, { locale })} | Remy` }, { name: 'description', content: m.home_description({}, { locale }) }],
+    links: [
+      { rel: 'canonical', href: `${origin}${path || '/'}` },
+      ...alternates(origin, path, locale).alternates.map(link => ({ rel: 'alternate', hrefLang: link.hrefLang, href: link.href })),
+    ],
+  };
 }
 
 /**

@@ -1,0 +1,33 @@
+import { HeadContent, Outlet, Scripts, createRootRoute, useRouterState } from '@tanstack/react-router';
+import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
+import { entryBase, notFoundPath } from '../paths';
+import { NotFound, ErrorPage } from '../problem';
+import styles from '../styles.css?url';
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [{ charSet: 'utf-8' }, { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+    links: [{ rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' }, { rel: 'stylesheet', href: styles }],
+  }),
+  shellComponent: Document,
+  component: Outlet,
+  notFoundComponent: NotFound,
+  errorComponent: ErrorPage,
+});
+
+/**
+ * The document. Paraglide's locale sets language and direction: the prerendered URL's at build
+ * time, the URL's in the browser. Entry lists are always in the base locale, also in a browser
+ * whose own language would resolve differently, so hydration matches the static HTML. The
+ * not-found pages ship without the app's scripts: they are served at every unknown URL, where the
+ * browser's router would resolve a different page and language than the one prerendered.
+ */
+function Document({ children }: { children: React.ReactNode }) {
+  const pathname = useRouterState({ select: state => state.location.pathname });
+  const entry = pathname === entryBase || pathname.startsWith(`${entryBase}/`);
+  const locale = entry ? baseLocale : getLocale();
+  return <html lang={locale} dir={direction(locale)}>
+    <head><HeadContent /></head>
+    <body>{children}{pathname !== notFoundPath && <Scripts />}</body>
+  </html>;
+}

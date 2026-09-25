@@ -1,6 +1,7 @@
 node_modules/
-build/
-.react-router/
+dist/
+test-results/
+playwright-report/
 .wrangler/
 # Generated per machine by mise run mcp:register.
 .mcp.json
