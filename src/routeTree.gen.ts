@@ -15,9 +15,12 @@ import { Route as NotFoundRouteImport } from './routes/not-found'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAccountRouteImport } from './routes/app.account'
+import { Route as AppClockRouteImport } from './routes/app.clock'
 import { Route as AppDemoRouteImport } from './routes/app.demo'
 import { Route as AppFormatsRouteImport } from './routes/app.formats'
 import { Route as AppLocationRouteImport } from './routes/app.location'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as ChooseSplatRouteImport } from './routes/choose/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -50,6 +53,16 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/app/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppAccountRoute = AppAccountRouteImport.update({
+  id: '/app/account',
+  path: '/app/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppClockRoute = AppClockRouteImport.update({
+  id: '/app/clock',
+  path: '/app/clock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppDemoRoute = AppDemoRouteImport.update({
   id: '/app/demo',
   path: '/app/demo',
@@ -65,6 +78,11 @@ const AppLocationRoute = AppLocationRouteImport.update({
   path: '/app/location',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/app/settings',
+  path: '/app/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChooseSplatRoute = ChooseSplatRouteImport.update({
   id: '/choose/$',
   path: '/choose/$',
@@ -77,9 +95,12 @@ export interface FileRoutesByFullPath {
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/account': typeof AppAccountRoute
+  '/app/clock': typeof AppClockRoute
   '/app/demo': typeof AppDemoRoute
   '/app/formats': typeof AppFormatsRoute
   '/app/location': typeof AppLocationRoute
+  '/app/settings': typeof AppSettingsRoute
   '/choose/$': typeof ChooseSplatRoute
   '/app/': typeof AppIndexRoute
 }
@@ -89,9 +110,12 @@ export interface FileRoutesByTo {
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/account': typeof AppAccountRoute
+  '/app/clock': typeof AppClockRoute
   '/app/demo': typeof AppDemoRoute
   '/app/formats': typeof AppFormatsRoute
   '/app/location': typeof AppLocationRoute
+  '/app/settings': typeof AppSettingsRoute
   '/choose/$': typeof ChooseSplatRoute
   '/app': typeof AppIndexRoute
 }
@@ -102,9 +126,12 @@ export interface FileRoutesById {
   '/not-found': typeof NotFoundRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/app/account': typeof AppAccountRoute
+  '/app/clock': typeof AppClockRoute
   '/app/demo': typeof AppDemoRoute
   '/app/formats': typeof AppFormatsRoute
   '/app/location': typeof AppLocationRoute
+  '/app/settings': typeof AppSettingsRoute
   '/choose/$': typeof ChooseSplatRoute
   '/app/': typeof AppIndexRoute
 }
@@ -116,9 +143,12 @@ export interface FileRouteTypes {
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/account'
+    | '/app/clock'
     | '/app/demo'
     | '/app/formats'
     | '/app/location'
+    | '/app/settings'
     | '/choose/$'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -128,9 +158,12 @@ export interface FileRouteTypes {
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/account'
+    | '/app/clock'
     | '/app/demo'
     | '/app/formats'
     | '/app/location'
+    | '/app/settings'
     | '/choose/$'
     | '/app'
   id:
@@ -140,9 +173,12 @@ export interface FileRouteTypes {
     | '/not-found'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/app/account'
+    | '/app/clock'
     | '/app/demo'
     | '/app/formats'
     | '/app/location'
+    | '/app/settings'
     | '/choose/$'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -153,9 +189,12 @@ export interface RootRouteChildren {
   NotFoundRoute: typeof NotFoundRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  AppAccountRoute: typeof AppAccountRoute
+  AppClockRoute: typeof AppClockRoute
   AppDemoRoute: typeof AppDemoRoute
   AppFormatsRoute: typeof AppFormatsRoute
   AppLocationRoute: typeof AppLocationRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   ChooseSplatRoute: typeof ChooseSplatRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -204,6 +243,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/account': {
+      id: '/app/account'
+      path: '/app/account'
+      fullPath: '/app/account'
+      preLoaderRoute: typeof AppAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/clock': {
+      id: '/app/clock'
+      path: '/app/clock'
+      fullPath: '/app/clock'
+      preLoaderRoute: typeof AppClockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/demo': {
       id: '/app/demo'
       path: '/app/demo'
@@ -225,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppLocationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/app/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/choose/$': {
       id: '/choose/$'
       path: '/choose/$'
@@ -241,9 +301,12 @@ const rootRouteChildren: RootRouteChildren = {
   NotFoundRoute: NotFoundRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  AppAccountRoute: AppAccountRoute,
+  AppClockRoute: AppClockRoute,
   AppDemoRoute: AppDemoRoute,
   AppFormatsRoute: AppFormatsRoute,
   AppLocationRoute: AppLocationRoute,
+  AppSettingsRoute: AppSettingsRoute,
   ChooseSplatRoute: ChooseSplatRoute,
   AppIndexRoute: AppIndexRoute,
 }
