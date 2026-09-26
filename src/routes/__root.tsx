@@ -1,9 +1,7 @@
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouterState } from '@tanstack/react-router';
 import type { QueryClient } from '@tanstack/react-query';
 import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
-import { DirectionProvider } from '@joeblew999/remy-ui/components/direction';
-import { ThemeProvider } from '@joeblew999/remy-ui/theme';
-import { SourceLink } from '@joeblew999/remy-ui/shell';
+import { AppProviders } from '@joeblew999/remy-ui/providers';
 import { entryBase, notFoundPath } from '../paths';
 import { NotFound, ErrorPage } from '@joeblew999/remy-ui/problem';
 import '../styles.css';
@@ -33,9 +31,6 @@ function Document({ children }: { children: React.ReactNode }) {
   const locale = entry ? baseLocale : getLocale();
   return <html lang={locale} dir={direction(locale)} suppressHydrationWarning>
     <head><HeadContent /></head>
-    <body><DirectionProvider direction={direction(locale)}><ThemeProvider defaultTheme="system" storageKey="theme">
-      {/* The site header's GitHub link: this app's own source. */}
-      <SourceLink value="https://github.com/joeblew999/remy-auth-app">{children}</SourceLink>
-    </ThemeProvider></DirectionProvider>{pathname !== notFoundPath && <Scripts />}</body>
+    <body><AppProviders locale={locale} repository="https://github.com/joeblew999/remy-auth-app">{children}</AppProviders>{pathname !== notFoundPath && <Scripts />}</body>
   </html>;
 }
