@@ -2,9 +2,8 @@ import { QueryClient } from '@tanstack/react-query';
 import { createRouter } from '@tanstack/react-router';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
 import { extractLocaleFromUrl } from '@joeblew999/remy-ui/runtime';
-import { allPaths } from '@joeblew999/remy-ui/paths';
 import { localeRewrite } from '@joeblew999/remy-ui/tanstack';
-import { entryBase } from './paths';
+import { allPaths, entryBase } from './paths';
 import { routeTree } from './routeTree.gen';
 
 /** The entry path ('' for /) of an un-localized entry URL, else undefined. */

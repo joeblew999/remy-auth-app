@@ -1,5 +1,5 @@
 {
-  "include": ["*.ts", "src/**/*", "worker-configuration.d.ts", "workers/**/*"],
+  "include": ["*.ts", "src/**/*", "tests/**/*", "worker-configuration.d.ts", "workers/**/*"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["vite/client", "node"],

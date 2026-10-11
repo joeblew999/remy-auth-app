@@ -1,80 +1,63 @@
 # Remy Auth App
 
-A client-rendered Remy application built entirely from the published shared package
-[`@joeblew999/remy-ui`](https://github.com/joeblew999/remy-auth/tree/main/packages/ui):
-the same controls, theme, catalogs in every language the package ships (thirteen since 0.10.5),
-language switcher and hint as [remy-auth](https://github.com/joeblew999/remy-auth), on the same
+A client-rendered Remy application built entirely from the published platform packages
+[`@joeblew999/remy-ui`](https://github.com/joeblew999/remy-auth/tree/main/packages/ui) and
+[`@joeblew999/remy-showcase`](https://github.com/joeblew999/remy-auth/tree/main/packages/showcase):
+the same controls, theme, catalogs in every language the package ships, language switcher and hint
+and the same showcase pages as [remy-auth](https://github.com/joeblew999/remy-auth), on the same
 TanStack Start and Router, but with every public page prerendered at build time instead of
 rendered per request, so the initial HTML still carries what Google's checks look for and a
 thin Worker only serves files.
 
-It is also the reference consumer: a new app starts from this repository, following remy-auth's
-[new-consumer recipe](https://github.com/joeblew999/remy-auth/blob/main/tasks/README.md#a-new-consumer).
+It is the showcase of the prerendered mode. A new app starts from remy-auth's blank app
+(`template/`, remy-auth's [developer docs](https://remy-auth-docs.gedw99.workers.dev/dev/tooling)), not from here.
 
 ```sh
-mise install                                             # mise >= 2026.9.12 (min_version)
-GITHUB_TOKEN=$(gh auth token) mise run project:setup     # npm ci, shared skills, MCP registration, verify
-mise run project:dev                                     # http://127.0.0.1:5174/en
-mise run project:test:quick                              # every check in QUICK_LOCALES only (the edit loop)
-mise run project:verify                                  # everything: MCP, types, build, every browser and HTTP check
+GITHUB_TOKEN=$(gh auth token) npm run setup   # npm ci, the pinned skills, the agents' rules, MCP registration, the guard, the installation's checks
+npm run dev:status                            # what is going on: main, GitHub's verdicts, the deployment
+npm run dev                                   # http://127.0.0.1:5174/en
+npm run dev:change                            # after every change: the check, in seconds
+npm run test -- quick                         # every check in a few languages (the edit loop)
 ```
 
 Google Chrome must be installed for the checks, and GitHub Packages needs a token even for public
-packages, hence `GITHUB_TOKEN` (`.npmrc`). No path to a remy-auth checkout exists here: the UI
-comes from the published package version in `package.json`, and every task (the pipeline, the
-agent bootstrap with pinned official skills, Chrome DevTools, Google's web guidance and MCP
-registration, and the Cloudflare tasks) comes from remy-auth's `tasks/` directory, included in
-`mise.toml` by git reference pinned to the release tag that matches the package version:
+packages, hence `GITHUB_TOKEN` (`.npmrc`). No path to a remy-auth checkout exists here: the UI and the
+tooling come from the published package version in `package.json`, whose `remy` bin runs every
+`package.json` script (the flow `dev:status|start|change|land|promote|done`, `dev`, `build`, `preview`,
+`test`, `check`, `setup`, `upgrade`, Cloudflare, observability). `remy.config.ts` holds the deployed
+origin and the local port; CI (`.github/workflows/google.yml`) calls remy-auth's shared workflow at the
+tag of the package. `npm run upgrade -- <version>` moves the package, the workflow's tag, the skills and
+the rules together. The framework, toolchain and tools are the package's exact dependencies: this
+`package.json` names only the platform, the showcase and remy-auth's contract.
 
-```toml
-[task_config]
-includes = ["git::https://github.com/joeblew999/remy-auth.git//tasks?ref=vX.Y.Z"]
-```
-
-`mise run project:upgrade-ui -- <version>` moves both together. The npm packages those tasks run
-are this repository's `devDependencies`. `mise run skills:list` and `mise run mcp:verify` show the
-bootstrap. `MISE_ENV=dev` follows remy-auth's `main` instead (`mise.dev.toml`; refresh the cached
-include with `MISE_TASK_REMOTE_NO_CACHE=true`), and a gitignored `mise.local.toml` can point at a
-local checkout.
-
-`mise.toml` holds only the mise version, the Node pin, the include and three inputs:
-`PREVIEW_PORT` (read from the shell, default 4174, so a worktree or agent picks its own:
-`PREVIEW_PORT=4232 mise run project:verify`), `PUBLIC_ORIGIN` (follows `PREVIEW_PORT`) and
-`DEPLOY_ORIGIN`. Nothing is overridden. `mise run cf:deploy` deploys (from the 0.10.6 tasks, with no tests
-unless `GATE=smoke|quick|full` picks a tier). Preview URLs are off in `wrangler.jsonc` (`cf:preview`
-deploys a throwaway Worker instead) and stored logs drop query strings.
-
-CI (`.github/workflows/google.yml`) runs the types and Google's Lighthouse audits on every push to
-`main`, with actions pinned by SHA and kept current by Dependabot.
+The flow is the only way to work here: `npm run dev:status` first, `npm run dev:change` after every
+change, `npm run dev:land -- "<what changed>"` to land (the check, the commit, the push), `npm run
+dev:promote` to deploy. Preview URLs are off in `wrangler.jsonc` (a throwaway Worker is deployed
+instead) and stored logs drop query strings.
 
 | Route | Behavior |
 | --- | --- |
-| `/`, `/formats`, `/app`, `/app/demo`, `/app/formats`, `/app/location` | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
+| `/`, `/formats`, `/app`, `/app/demo`, `/app/formats`, `/app/location`, … | Prerendered list of every language version (the `x-default` target); in the browser Paraglide resolves the visitor's language (remembered choice, browser languages, else English) and moves there |
 | `/{locale}` | Prerendered home page with localized content, direction, metadata and alternate links |
 | `/{locale}/formats` | Prerendered examples of the locale's calendar, digits, clock, week, dates, numbers, currency, plurals and ordinals; the device time zone row fills in the browser; the currency, count and calendar controls are links with search params (defaults in the HTML, the address's values once hydrated) |
 | `/{locale}/app/formats` | The same formats content in the app shell |
-| `/{locale}/app` | App home in the app shell (shadcn's sidebar-16), with remy-auth's live status: the browser asks remy-auth's `GET /api/status` through its published contract (`@joeblew999/remy-auth-contract`, every answer validated), only in the build for `DEPLOY_ORIGIN`, the origin remy-auth allows (CORS); app pages need JavaScript and carry `noindex` |
+| `/{locale}/app` | App home in the app shell (shadcn's sidebar-16), with remy-auth's live status: the browser asks remy-auth's `GET /api/status` through its published contract (`@joeblew999/remy-auth-contract`, every answer validated), only in the build for the production origin, the one remy-auth allows (CORS); app pages need JavaScript and carry `noindex` |
 | `/{locale}/app/demo` | Counter and a localized reservation form; interactive after hydration |
 | `/{locale}/app/location` | The device's own location, asked in the browser only on request |
+| `/{locale}/app/settings` | Language, appearance, the product's name, and what is deployed (this app and remy-auth, each asked what it runs) |
 | `/robots.txt`, `/sitemap.xml` | Prerendered; the sitemap lists every site page (not `/app`) in every locale with `hreflang` alternates |
 | Anything else | The language's prerendered `404.html` (`/es/…` gets Spanish, anything without a language English), without scripts, with a 404 status |
 
-The build (`vite build`, see `vite.config.ts`) renders the pages with a TanStack Start Worker
-(`src/server.ts`, Cloudflare's prerender Worker) that is never deployed; the deployed Worker is
-`workers/app.ts`, which adds request IDs, the shared log line and `/healthz` in front of the files.
-`mise run project:dev` runs the Start Worker instead, so every route renders on demand. The
-route tree `src/routeTree.gen.ts` is generated by `dev` and `build` and committed.
+The build (`vite.config.ts`: the package's `remyApp()` with the prerender options) renders the pages with
+a TanStack Start Worker (`src/server.ts`, Cloudflare's prerender Worker) that is never deployed; the
+deployed Worker is `workers/app.ts`, which adds request IDs, the shared log line and `/healthz` in front
+of the files. `npm run dev` runs the Start Worker instead, so every route renders on demand. The route
+tree `src/routeTree.gen.ts` is generated by `dev` and `build` and committed.
 
 Language behaviour is the package's, on Paraglide's `url`, `cookie` and `preferredLanguage`
 strategies: remy-auth applies them in a server middleware, this app in the browser after
-hydration. The checks are the package's too: `tests/gui.spec.ts` and `tests/lighthouse.spec.ts`
-only call `@joeblew999/remy-ui/checks` with this app's paths, so Google's checks arrive with
-the code. Its Playwright configuration is the package's `playwrightConfig()`. Compared with
-remy-auth's server-rendered pages, this app has no Cloudflare geolocation section, because a
-prerendered page has no request. See [the plan](.plans/done/app.md), now done.
-the code. Every mise task comes from the same remy-auth include as the bootstrap, including the
-pipeline (`project:dev`, `build`, `preview`, `test`, `verify`, `cf:deploy`); this repository's
-`mise.toml` holds only its Node pin, the include reference and four inputs (`PREVIEW_PORT`,
-`PUBLIC_ORIGIN`, `DEPLOY_ORIGIN`, `REMY_AUTH_ORIGIN`). Its Playwright configuration is the package's
-`playwrightConfig()`. Compared with remy-auth's server-rendered pages, this app has no Cloudflare
-geolocation section, because a prerendered page has no request. See [the plan](.plans/done/app.md), now done.
+hydration (`src/entry.tsx`, `src/preferred.ts`, `src/router.tsx`: the prerender-only glue). The checks
+are the packages' too: `tests/gui.spec.ts` is three calls (the prerendered app's shared set, the
+showcase's, the status card's) with this app's paths and name, `tests/smoke.spec.ts` one. Compared with
+remy-auth's server-rendered pages, this app has no Cloudflare geolocation section, because a prerendered
+page has no request. See [the plan](.plans/done/app.md), now done.

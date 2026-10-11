@@ -1,44 +1,20 @@
-# Level 2 checks (Google's Lighthouse audits) on every push to main, the same pattern as
-# remy-auth's google.yml. Every task comes from remy-auth's include in mise.toml; this app never
-# releases, so there is no release job. npm ci reads @joeblew999/remy-ui from GitHub Packages with
-# this repository's GITHUB_TOKEN (.npmrc), which works once the package grants this repository read
-# access (the package's settings, "Manage Actions access").
-name: Google checks
+# The heavy checks (every language, Google's audits, the repositories this one serves) on every push to
+# main, in parallel, on GitHub: remy-auth's shared workflow, at the tag of the tasks and package
+# (project:upgrade-ui moves it). Locally the check is project:check, in seconds. Its release job runs only for tags, which an app that publishes no packages never makes.
+name: Checks
 
 on:
   push:
     branches: [main]
+    tags: ['v*']
+  pull_request:
   workflow_dispatch:
 
 permissions: {}
 
-# A newer push to the same branch replaces the running check.
-concurrency:
-  group: google-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  google:
-    runs-on: ubuntu-latest
+  checks:
+    uses: joeblew999/remy-auth/.github/workflows/google.yml@v0.15.0
     permissions:
-      contents: read
-      packages: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
-        with:
-          version: 2026.9.12 # mise.toml's min_version
-          cache: true
-      - run: npm ci
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: mise run project:typecheck
-      - run: mise run project:test:google
-      - if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: google-report
-          path: playwright-report/local
-          retention-days: 14
+      contents: write
+      packages: write

@@ -2,8 +2,10 @@ import { HeadContent, Outlet, Scripts, createRootRouteWithContext, useRouterStat
 import type { QueryClient } from '@tanstack/react-query';
 import { baseLocale, getLocale, direction } from '@joeblew999/remy-ui/locale';
 import { AppProviders } from '@joeblew999/remy-ui/providers';
-import { entryBase, notFoundPath } from '../paths';
 import { NotFound, ErrorPage } from '@joeblew999/remy-ui/problem';
+import { entryBase, notFoundPath } from '../paths';
+import { usePreferred } from '../preferred';
+import { remyApp } from '../remy-app';
 import '../styles.css';
 
 // Router context: the QueryClient from getRouter (src/router.tsx).
@@ -21,7 +23,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 /**
  * The document. Paraglide's locale sets language and direction: the prerendered URL's at build
  * time, the URL's in the browser. Entry lists are always in the base locale, also in a browser
- * whose own language would resolve differently, so hydration matches the static HTML. The
+ * whose own language would resolve differently, so hydration matches the static HTML. AppProviders
+ * carries this app's config (src/remy-app.tsx) and the language worth offering, decided in the
+ * browser after hydration (src/preferred.ts); every frame reads both, so no page passes them. The
  * not-found pages ship without the app's scripts: they are served at every unknown URL, where the
  * browser's router would resolve a different page and language than the one prerendered.
  */
@@ -31,6 +35,6 @@ function Document({ children }: { children: React.ReactNode }) {
   const locale = entry ? baseLocale : getLocale();
   return <html lang={locale} dir={direction(locale)} suppressHydrationWarning>
     <head><HeadContent /></head>
-    <body><AppProviders locale={locale} repository="https://github.com/joeblew999/remy-auth-app">{children}</AppProviders>{pathname !== notFoundPath && <Scripts />}</body>
+    <body><AppProviders locale={locale} app={remyApp} preferred={usePreferred()}>{children}</AppProviders>{pathname !== notFoundPath && <Scripts />}</body>
   </html>;
 }

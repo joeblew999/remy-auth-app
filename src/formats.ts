@@ -1,6 +1,6 @@
 import { getLocale } from '@joeblew999/remy-ui/locale';
 import { localeInfo } from '@joeblew999/remy-ui/locale-info';
-import { formatsSearchSchema } from '@joeblew999/remy-ui/showcase/search-params';
+import { formatsSearchSchema } from '@joeblew999/remy-showcase/search-params';
 
 /**
  * The route options both formats routes share (site /formats and app /app/formats).

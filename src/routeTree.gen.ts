@@ -10,22 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CspReportRouteImport } from './../node_modules/@joeblew999/remy-ui/src/app-routes/csp-report'
 import { Route as FormatsRouteImport } from './routes/formats'
 import { Route as NotFoundRouteImport } from './routes/not-found'
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppAccountRouteImport } from './routes/app.account'
-import { Route as AppClockRouteImport } from './routes/app.clock'
-import { Route as AppDemoRouteImport } from './routes/app.demo'
-import { Route as AppFormatsRouteImport } from './routes/app.formats'
-import { Route as AppLocationRouteImport } from './routes/app.location'
-import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as RobotsChar91DotChar93txtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapChar91DotChar93xmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AppDotindexRouteImport } from './routes/app.index'
+import { Route as AppDotaccountRouteImport } from './routes/app.account'
+import { Route as AppDotclockRouteImport } from './routes/app.clock'
+import { Route as AppDotdemoRouteImport } from './routes/app.demo'
+import { Route as AppDotformatsRouteImport } from './routes/app.formats'
+import { Route as AppDotlocationRouteImport } from './routes/app.location'
+import { Route as AppDotsettingsRouteImport } from './routes/app.settings'
 import { Route as ChooseSplatRouteImport } from './routes/choose/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CspReportRoute = CspReportRouteImport.update({
+  id: '/csp-report',
+  path: '/csp-report',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FormatsRoute = FormatsRouteImport.update({
@@ -38,47 +44,49 @@ const NotFoundRoute = NotFoundRouteImport.update({
   path: '/not-found',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
-  id: '/robots.txt',
-  path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AppIndexRoute = AppIndexRouteImport.update({
+const RobotsChar91DotChar93txtRoute =
+  RobotsChar91DotChar93txtRouteImport.update({
+    id: '/robots.txt',
+    path: '/robots.txt',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SitemapChar91DotChar93xmlRoute =
+  SitemapChar91DotChar93xmlRouteImport.update({
+    id: '/sitemap.xml',
+    path: '/sitemap.xml',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AppDotindexRoute = AppDotindexRouteImport.update({
   id: '/app/',
   path: '/app/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppAccountRoute = AppAccountRouteImport.update({
+const AppDotaccountRoute = AppDotaccountRouteImport.update({
   id: '/app/account',
   path: '/app/account',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppClockRoute = AppClockRouteImport.update({
+const AppDotclockRoute = AppDotclockRouteImport.update({
   id: '/app/clock',
   path: '/app/clock',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppDemoRoute = AppDemoRouteImport.update({
+const AppDotdemoRoute = AppDotdemoRouteImport.update({
   id: '/app/demo',
   path: '/app/demo',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppFormatsRoute = AppFormatsRouteImport.update({
+const AppDotformatsRoute = AppDotformatsRouteImport.update({
   id: '/app/formats',
   path: '/app/formats',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppLocationRoute = AppLocationRouteImport.update({
+const AppDotlocationRoute = AppDotlocationRouteImport.update({
   id: '/app/location',
   path: '/app/location',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
+const AppDotsettingsRoute = AppDotsettingsRouteImport.update({
   id: '/app/settings',
   path: '/app/settings',
   getParentRoute: () => rootRouteImport,
@@ -91,54 +99,58 @@ const ChooseSplatRoute = ChooseSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/csp-report': typeof CspReportRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
-  '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/clock': typeof AppClockRoute
-  '/app/demo': typeof AppDemoRoute
-  '/app/formats': typeof AppFormatsRoute
-  '/app/location': typeof AppLocationRoute
-  '/app/settings': typeof AppSettingsRoute
+  '/robots.txt': typeof RobotsChar91DotChar93txtRoute
+  '/sitemap.xml': typeof SitemapChar91DotChar93xmlRoute
+  '/app/account': typeof AppDotaccountRoute
+  '/app/clock': typeof AppDotclockRoute
+  '/app/demo': typeof AppDotdemoRoute
+  '/app/formats': typeof AppDotformatsRoute
+  '/app/location': typeof AppDotlocationRoute
+  '/app/settings': typeof AppDotsettingsRoute
   '/choose/$': typeof ChooseSplatRoute
-  '/app/': typeof AppIndexRoute
+  '/app/': typeof AppDotindexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/csp-report': typeof CspReportRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
-  '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/clock': typeof AppClockRoute
-  '/app/demo': typeof AppDemoRoute
-  '/app/formats': typeof AppFormatsRoute
-  '/app/location': typeof AppLocationRoute
-  '/app/settings': typeof AppSettingsRoute
+  '/robots.txt': typeof RobotsChar91DotChar93txtRoute
+  '/sitemap.xml': typeof SitemapChar91DotChar93xmlRoute
+  '/app/account': typeof AppDotaccountRoute
+  '/app/clock': typeof AppDotclockRoute
+  '/app/demo': typeof AppDotdemoRoute
+  '/app/formats': typeof AppDotformatsRoute
+  '/app/location': typeof AppDotlocationRoute
+  '/app/settings': typeof AppDotsettingsRoute
   '/choose/$': typeof ChooseSplatRoute
-  '/app': typeof AppIndexRoute
+  '/app': typeof AppDotindexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/csp-report': typeof CspReportRoute
   '/formats': typeof FormatsRoute
   '/not-found': typeof NotFoundRoute
-  '/robots.txt': typeof RobotsDottxtRoute
-  '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/app/account': typeof AppAccountRoute
-  '/app/clock': typeof AppClockRoute
-  '/app/demo': typeof AppDemoRoute
-  '/app/formats': typeof AppFormatsRoute
-  '/app/location': typeof AppLocationRoute
-  '/app/settings': typeof AppSettingsRoute
+  '/robots.txt': typeof RobotsChar91DotChar93txtRoute
+  '/sitemap.xml': typeof SitemapChar91DotChar93xmlRoute
+  '/app/account': typeof AppDotaccountRoute
+  '/app/clock': typeof AppDotclockRoute
+  '/app/demo': typeof AppDotdemoRoute
+  '/app/formats': typeof AppDotformatsRoute
+  '/app/location': typeof AppDotlocationRoute
+  '/app/settings': typeof AppDotsettingsRoute
   '/choose/$': typeof ChooseSplatRoute
-  '/app/': typeof AppIndexRoute
+  '/app/': typeof AppDotindexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/csp-report'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
@@ -154,6 +166,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/csp-report'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
@@ -169,6 +182,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/csp-report'
     | '/formats'
     | '/not-found'
     | '/robots.txt'
@@ -185,18 +199,19 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CspReportRoute: typeof CspReportRoute
   FormatsRoute: typeof FormatsRoute
   NotFoundRoute: typeof NotFoundRoute
-  RobotsDottxtRoute: typeof RobotsDottxtRoute
-  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  AppAccountRoute: typeof AppAccountRoute
-  AppClockRoute: typeof AppClockRoute
-  AppDemoRoute: typeof AppDemoRoute
-  AppFormatsRoute: typeof AppFormatsRoute
-  AppLocationRoute: typeof AppLocationRoute
-  AppSettingsRoute: typeof AppSettingsRoute
+  RobotsChar91DotChar93txtRoute: typeof RobotsChar91DotChar93txtRoute
+  SitemapChar91DotChar93xmlRoute: typeof SitemapChar91DotChar93xmlRoute
+  AppDotaccountRoute: typeof AppDotaccountRoute
+  AppDotclockRoute: typeof AppDotclockRoute
+  AppDotdemoRoute: typeof AppDotdemoRoute
+  AppDotformatsRoute: typeof AppDotformatsRoute
+  AppDotlocationRoute: typeof AppDotlocationRoute
+  AppDotsettingsRoute: typeof AppDotsettingsRoute
   ChooseSplatRoute: typeof ChooseSplatRoute
-  AppIndexRoute: typeof AppIndexRoute
+  AppDotindexRoute: typeof AppDotindexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -206,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/csp-report': {
+      id: '/csp-report'
+      path: '/csp-report'
+      fullPath: '/csp-report'
+      preLoaderRoute: typeof CspReportRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/formats': {
@@ -226,63 +248,63 @@ declare module '@tanstack/react-router' {
       id: '/robots.txt'
       path: '/robots.txt'
       fullPath: '/robots.txt'
-      preLoaderRoute: typeof RobotsDottxtRouteImport
+      preLoaderRoute: typeof RobotsChar91DotChar93txtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      preLoaderRoute: typeof SitemapChar91DotChar93xmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
       id: '/app/'
       path: '/app'
       fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
+      preLoaderRoute: typeof AppDotindexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/account': {
       id: '/app/account'
       path: '/app/account'
       fullPath: '/app/account'
-      preLoaderRoute: typeof AppAccountRouteImport
+      preLoaderRoute: typeof AppDotaccountRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/clock': {
       id: '/app/clock'
       path: '/app/clock'
       fullPath: '/app/clock'
-      preLoaderRoute: typeof AppClockRouteImport
+      preLoaderRoute: typeof AppDotclockRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/demo': {
       id: '/app/demo'
       path: '/app/demo'
       fullPath: '/app/demo'
-      preLoaderRoute: typeof AppDemoRouteImport
+      preLoaderRoute: typeof AppDotdemoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/formats': {
       id: '/app/formats'
       path: '/app/formats'
       fullPath: '/app/formats'
-      preLoaderRoute: typeof AppFormatsRouteImport
+      preLoaderRoute: typeof AppDotformatsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/location': {
       id: '/app/location'
       path: '/app/location'
       fullPath: '/app/location'
-      preLoaderRoute: typeof AppLocationRouteImport
+      preLoaderRoute: typeof AppDotlocationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/settings': {
       id: '/app/settings'
       path: '/app/settings'
       fullPath: '/app/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
+      preLoaderRoute: typeof AppDotsettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/choose/$': {
@@ -297,28 +319,30 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CspReportRoute: CspReportRoute,
   FormatsRoute: FormatsRoute,
   NotFoundRoute: NotFoundRoute,
-  RobotsDottxtRoute: RobotsDottxtRoute,
-  SitemapDotxmlRoute: SitemapDotxmlRoute,
-  AppAccountRoute: AppAccountRoute,
-  AppClockRoute: AppClockRoute,
-  AppDemoRoute: AppDemoRoute,
-  AppFormatsRoute: AppFormatsRoute,
-  AppLocationRoute: AppLocationRoute,
-  AppSettingsRoute: AppSettingsRoute,
+  RobotsChar91DotChar93txtRoute: RobotsChar91DotChar93txtRoute,
+  SitemapChar91DotChar93xmlRoute: SitemapChar91DotChar93xmlRoute,
+  AppDotaccountRoute: AppDotaccountRoute,
+  AppDotclockRoute: AppDotclockRoute,
+  AppDotdemoRoute: AppDotdemoRoute,
+  AppDotformatsRoute: AppDotformatsRoute,
+  AppDotlocationRoute: AppDotlocationRoute,
+  AppDotsettingsRoute: AppDotsettingsRoute,
   ChooseSplatRoute: ChooseSplatRoute,
-  AppIndexRoute: AppIndexRoute,
+  AppDotindexRoute: AppDotindexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

@@ -13,4 +13,4 @@ export const remyAuthOrigin = import.meta.env.PUBLIC_REMY_AUTH_ORIGIN as string;
  * remy-auth's API through its published contract (@joeblew999/remy-auth-contract): typed by the
  * contract itself, every response parsed against it before use; TanStack Query options from it.
  */
-export const remyAuth = createTanstackQueryUtils(contractClient(contract, { url: () => remyAuthOrigin }));
+export const remyAuth = createTanstackQueryUtils(contractClient(contract, { origin: () => remyAuthOrigin }));

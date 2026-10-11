@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { baseLocale, shouldRedirect } from '@joeblew999/remy-ui/runtime';
+import { pageTitle } from '@joeblew999/remy-ui/app-config';
 import { LanguageLinks } from '@joeblew999/remy-ui/language';
 import { alternates } from '@joeblew999/remy-ui/seo';
 import { m } from '@joeblew999/remy-ui/messages';
 import { origin } from './origin';
+import { product } from './product';
 
 /** head() for an entry URL without a locale: canonical to itself, every language version linked, x-default to itself. */
 export function entryHead(path: string) {
   const locale = baseLocale;
   return {
-    meta: [{ title: `${m.language_label({}, { locale })} | Remy` }, { name: 'description', content: m.home_description({}, { locale }) }],
+    meta: [{ title: pageTitle(m.language_label({}, { locale }), product) }, { name: 'description', content: m.home_description({ product }, { locale }) }],
     links: [
       { rel: 'canonical', href: `${origin}${path || '/'}` },
       ...alternates(origin, path, locale).alternates.map(link => ({ rel: 'alternate', hrefLang: link.hrefLang, href: link.href })),

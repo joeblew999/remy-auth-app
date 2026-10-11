@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
-import { allPaths } from '@joeblew999/remy-ui/paths';
+import { allPaths } from '../../paths';
 import { Entry, entryHead } from '../../entry';
 
 // The un-localized entry URLs (/, /formats, /app, /app/demo, /app/formats, /app/location), routed here by the router's rewrite.
