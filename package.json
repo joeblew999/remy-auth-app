@@ -38,8 +38,8 @@
     "upgrade": "remy upgrade"
   },
   "dependencies": {
-    "@joeblew999/remy-auth-contract": "0.4.0",
-    "@joeblew999/remy-showcase": "0.1.0",
-    "@joeblew999/remy-ui": "0.15.0"
+    "@joeblew999/remy-auth-contract": "0.4.1",
+    "@joeblew999/remy-showcase": "0.1.1",
+    "@joeblew999/remy-ui": "0.15.1"
   }
 }

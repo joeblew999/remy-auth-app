@@ -3,7 +3,7 @@
 `remy rules` writes the platform's rules block here (npm run setup runs it).
 
 <!-- BEGIN:remy-rules (written by remy rules; edit around it, not in it) -->
-This repo is built on the Remy platform: @joeblew999/remy-ui 0.15.0, whose `remy` bin is its tooling.
+This repo is built on the Remy platform: @joeblew999/remy-ui 0.15.1, whose `remy` bin is its tooling.
 Its rules are the `remy` skill; read `.agents/skills/remy/SKILL.md` (Claude:
 `.claude/skills/remy/SKILL.md`) before changing anything. It lists the references: how we work, the
 development principles, tooling, the UI package and writing docs.
