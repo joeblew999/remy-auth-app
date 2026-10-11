@@ -14,6 +14,9 @@ main and live; then move its plan to [done/](done/).
 3. **Move to @joeblew999/remy-ui 0.15.0** (2026-10-11): mise gone, `package.json` is the entry (the `remy`
    bin's scripts, `remy.config.ts`, the shared workflow at `v0.15.0`); the showcase pages from
    `@joeblew999/remy-showcase` 0.1.0 and the contract 0.4.0; `defineRemyApp` (the showcase's lists, the
-   deployments), `remyApp()` in `vite.config.ts`, `{product}` in the messages, three check calls. Closes
+   deployments), `remyApp()` in `vite.config.ts`, `{product}` in the messages, three check calls. Then
+   0.15.1 the same day through `npm run upgrade -- 0.15.1` (remy-showcase 0.1.1, the contract 0.4.1; the
+   platform's `remy.config.ts` now owns the origins, and the showcase declares its dependencies). Closes
    when CI is green on main (the workflow's `npm ci` needs this repository granted access to the
-   showcase's and the contract's packages on GitHub Packages, as it has for remy-ui) and the deploy is live.
+   showcase's package on GitHub Packages, as it has for remy-ui and the contract: the package's "Manage
+   Actions access", owner only) and `npm run dev:promote` has put it live.
